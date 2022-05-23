@@ -1,31 +1,29 @@
 const db = require("../config/dbconnection");
 
 module.exports = {
-    getUserData: function (username, callback){
-        return db.query(
-            "SELECT * FROM `user` AS u WHERE u.username = ?",
-            [username], 
-            (resolve, reject) => {
-                try {
-                    (err, rows) => {
-                        if (rows != null){
-                            resolve(rows);
-                        }else{
-                            resolve(false);
-                        }
-                    }
-                } catch (err) {
-                    console.log(err);
-                    resolve(false);
-                }
-            }
-        );
+    getUserData:async function (username){
+        var [rows] = await db.promise().query(
+            'SELECT * FROM `user` AS u WHERE u.username = ? AND active = 1',
+            [username])
+        return rows;
     },
-    addUser: function (date,password, callback){
-        return db.query(
-            "SELECT * FROM `user` AS u WHERE u.username = ?",
-            [username], 
-            callback
-        );
+    addUser: function (data,hash_password, callback){
+        return db.promise().query(
+            "INSERT INTO `user`(`email`, `username`, `password`, `s_name`, `l_name`, `user_role`, `active`, `create_by`, `create_date`, `update_by`, `update_date`) "+
+            "VALUES (?,?,?,?,?,?,?,?,?,?,?) ",
+            [
+                data.email,
+                data.username,
+                hash_password,
+                data.s_name,
+                data.l_name,
+                data.user_role,
+                data.active,
+                data.user_id,
+                data.date,
+                data.user_id,
+                data.date
+            ]
+        )
     }
 }

@@ -38,6 +38,8 @@ var UserManageRoutes = require("./routes/user_manage.route");
 
 //use API
 app.use("/",RoomDataRoutes);
+app.use("/Login",LoginRoutes);
+app.use("/usermanage",UserManageRoutes);
 
 
 //Socket

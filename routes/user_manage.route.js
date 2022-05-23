@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const UserController = require('../controllers/user.controller');
 
 router.get('/', function(req,res,next){
     res.render('user_manage');
@@ -7,7 +8,7 @@ router.get('/', function(req,res,next){
 
 router.get("/GetRoomDataAll")
 
-router.post("/AddRoomData")
+router.post("/AddUserAccount",UserController.regisUser);
 
 router.post("/RemoveRoomData")
 
