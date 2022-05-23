@@ -1,10 +1,23 @@
 const db = require("../config/dbconnection");
 
-var Roomdata ={
+module.exports = {
     getAllDataRoom: function (callback){
         return db.query(
             "SELECT * FROM `room` AS r WHERE r.active = 0", 
-            callback
+            (resolve, reject) => {
+                try {
+                    (err, rows) => {
+                        if (rows != null){
+                            resolve(rows);
+                        }else{
+                            resolve(false);
+                        }
+                    }
+                } catch (err){
+                    console.log(err);
+                    resolve(false);
+                }
+            }
         );
     },
 
