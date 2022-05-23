@@ -22,7 +22,7 @@
                             </div>
                             <h4 class="text-center text-uppercase text-white mt-3">Sign in Accounts</h4>
 
-                            <form >
+                            <form id="login-form" novalidate>
                                 <div class="form-outline mt-4 form-row form-white card-body p-1 text-start text-white text-center">
                                     <label class="form-label" for="usernameX"><p class="text-uppercase h5"></p></label>
                                     <input type="username" id="typeUsername" class="form-control" placeholder="Username"/>
@@ -58,8 +58,29 @@
 
             },
             onSubmitLogin: function(){
-                $("#typeUsername").val;
-                $("#typePassword").val;
+                $("#login-form").submit( function(e){
+                    e.preventDefault()
+                    var post_username = $("#typeUsername").val();
+                    var post_password = $("#typePassword").val();
+                    if(post_username != undefined || post_password != undefined){
+                        $.ajax({
+                            url: "/Login/PostLogin", 
+                            type: "POST",
+                            data: { 
+                                username: post_username, 
+                                password: post_password 
+                            },
+                            success: function (result) {
+                                console.log(result);
+                                
+                            },
+                            error: function (err) {
+                             // check the err for error details
+                            }
+                          }); // ajax call closing
+                    }
+                    
+                })
             },
         }
     })();

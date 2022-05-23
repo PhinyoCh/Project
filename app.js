@@ -35,12 +35,13 @@ var ProfileRoutes = require("./routes/profile.route");
 var EditProfileRoutes = require("./routes/editprofile.route");
 var RequestRoutes = require("./routes/request.route");
 var UserManageRoutes = require("./routes/user_manage.route");
+var UploadFile = require("./routes/sound_manage.route");
 
 //use API
 app.use("/",RoomDataRoutes);
 app.use("/Login",LoginRoutes);
 app.use("/usermanage",UserManageRoutes);
-
+app.use("/upload",UploadFile);
 
 //Socket
 const io = require("socket.io")(server, { cors: { origin: "*" } });

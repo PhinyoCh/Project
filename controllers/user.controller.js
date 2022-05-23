@@ -2,20 +2,17 @@ const bcrypt = require("bcrypt");
 const user = require("../models/user.model");
 
 module.exports = {
-    getPage: function(res){
+    getPage: function(req, res){
         res.render('login');
     },
     checkUserLogin: async function (req, res, next){
             let username = req.body.username;
             let password = req.body.password;
+            console.log(password);
             let dataUser = await user.getUserData(username);
             // return res.json({"length":dataUser[0]});
             if(dataUser.length > 0){
-                let hash_password = dataUser[0]["password"];
-                let a =await bcrypt.hash(password,10);
-                console.log(a);
-                console.log(hash_password);
-                let match = await bcrypt.compare(password,hash_password);
+                let match = await bcrypt.compare(password,dataUser[0]['password']);
                 if (match){
                    return res.json({data: dataUser});
                 } else{

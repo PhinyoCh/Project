@@ -5,6 +5,7 @@ const LoginController = require('../controllers/user.controller');
 /* Get Index Page*/
 router.get('/',LoginController.getPage)
 
+
 /*Post User Login*/ 
 router.post("/PostLogin",LoginController.checkUserLogin)
 
