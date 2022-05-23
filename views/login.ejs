@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>.:: Login ::.</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/public/css/bootstrap.min.css" rel="stylesheet">
+    <script src="/public/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/public/css/Style.css">
+</head>
+<body>
+
+    <section class="vh-100 gradient-custom">
+        <div class="container">
+            <div class="container">
+                <div class="row d-flex justify-content-center align-items-center h-100">
+                    <div class="col-100 col-md-50 col-lg-50 col-xl-10">
+                            <div class="card-body bg-dark p- text-center mt-5"  style="border-radius: 1rem;">
+                                
+                            <div class="mb-1 mt-5 text-center">
+                                <img src="../public/img/Login.jpg" height="100">
+                            </div>
+                            <h4 class="text-center text-uppercase text-white mt-3">Sign in Accounts</h4>
+
+                            <form >
+                                <div class="form-outline mt-4 form-row form-white card-body p-1 text-start text-white text-center">
+                                    <label class="form-label" for="usernameX"><p class="text-uppercase h5"></p></label>
+                                    <input type="username" id="typeUsername" class="form-control" placeholder="Username"/>
+                                </div>
+                                <div class="form-outline mb-3 form-row form-white card-body p-1 text-start text-white text-center">
+                                    <!-- <label class="form-label" for="passwordX"><p class="text-uppercase h5"></p></label> -->
+                                    <input type="password" id="typePassword" class="form-control" placeholder="Password"/>
+                                </div>
+                                <button class="text-uppercase mt-3 btn btn-lg btn-primary py-2 px-5" id="btn-login" type="submit"><p class="text-uppercase h4">Sign in</p></button>
+                                <div>
+                                    <h6 class="text-uppercase mt-4 mb-5 text-white">Did you forget your password? <a href="#!" class="text-white-30 fw-bold">Reset Password</a></h6>      
+                                </div>
+                            </form>
+                            <div>
+                                <p class="copyrigth">Copyright © 2021 <a href="https://cpe.engineer.rmutt.ac.th/" class="text-white-30 fw-bold">CPERMUTT</a>. All rights reserved.</p>      
+                            </div>
+                        <div>
+                    </div>
+                </div>            
+            </div>                
+        </div>
+    </section>
+</body>
+</html>
+
+<script type="text/javascript" src="/node_modules/jquery/dist/jquery.min.js"></script>
+<script type="text/javascript" src="/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    var Feature = (function(){
+        
+        return {
+            init: function(){
+
+            },
+            onSubmitLogin: function(){
+                $("#typeUsername").val;
+                $("#typePassword").val;
+            },
+        }
+    })();
+
+    jQuery(document).ready(function(){
+        Feature.onSubmitLogin();
+    });
+</script>

@@ -1,0 +1,19 @@
+.gradient-custom {
+    background: #5e5d5d;
+    background: -webkit-linear-gradient(to right, rgb(53, 53, 53), rgb(66, 65, 65));
+    background: linear-gradient(to right, rgb(97, 95, 95), rgba(70, 69, 69, 0.397));
+  }
+.form-control{
+  max-width: 500px;
+  font-size: 20px;
+  text-align: center;
+  margin: 7px auto;
+}
+.copyrigth{
+  color:rgb(255, 255, 255);
+  font-size: 12px;
+  padding: 5px;
+}
+
+
+

@@ -1,0 +1,303 @@
+<%- include('./sidebar.ejs')  -%> 
+
+    <main class="mt-5 pt-3 ">
+      <div class="container-fluid">
+          <div class="row">
+            <div class="card">
+              <div class="card-header bg-dark">
+                <h3 class="text-uppercase text-center text-white mt-4">user manage</h3>
+              </div>
+
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table id="table-room-id" class="table" style="width: 100%">
+                    <thead>                     
+                      <tr>
+                        <th class="text-center">NUMBER</th>
+                        <th class="text-center">USER ROLE</th>
+                        <th class="text-center">NAME</th>
+                        <th class="text-center">EMAIL</th>
+                        <th class="text-center">USER NAME</th>
+                        <th class="text-center">PASSWORD</th>
+                        <th class="text-center">OPERACTION</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      
+                      <tr>
+                        <td class="text-center">1</td>
+                        <td class="text-center">ADMIN</td>
+                        <td class="text-center">Test Systems</td>
+                        <td class="text-center">admin@admin.com</td>
+                        <td class="text-center">admin</td>
+                        <td class="text-center"><a href="">ResetPassword</a></td>                        
+                        <td class="text-center">
+                          <button type="submit" name="edit" data-bs-toggle="modal" data-bs-target="#edit-modal" class="btn btn-primary"><i class="fa fa-edit"></i>Edit</button>
+                          <button type="submit" name="delete" data-bs-toggle="modal" data-bs-target="#delete-modal" class="btn btn-danger"><i class="fa fa-trash"></i>Delete</button>
+                        </td>    
+                      </tr>
+                      
+                      <tr>
+                        <td class="text-center">2</td>
+                        <td class="text-center">STAFF</td>
+                        <td class="text-center">Phinyo Chaengchit</td>
+                        <td class="text-center">phinyo@staff.com</td>
+                        <td class="text-center">phinyoch</td>
+                        <td class="text-center"><a href="">ResetPassword</a></td>                        
+                        <td class="text-center">
+                          <button type="submit" name="edit" data-bs-toggle="modal" data-bs-target="#edit-modal" class="btn btn-primary"><i class="fa fa-edit"></i>Edit</button>
+                          <button type="submit" name="delete" data-bs-toggle="modal" data-bs-target="#delete-modal" class="btn btn-danger"><i class="fa fa-trash"></i>Delete</button>
+                        </td>    
+                      </tr>
+
+                      <tr>
+                        <td class="text-center">3</td>
+                        <td class="text-center">STAFF</td>
+                        <td class="text-center">Aisaret Chaysem</td>
+                        <td class="text-center">aisaret@staff.com</td>
+                        <td class="text-center">aisaretch</td>
+                        <td class="text-center"><a href="">ResetPassword</a></td>                        
+                        <td class="text-center">
+                          <button type="submit" name="edit" data-bs-toggle="modal" data-bs-target="#edit-modal" class="btn btn-primary"><i class="fa fa-edit"></i>Edit</button>
+                          <button type="submit" name="delete" data-bs-toggle="modal" data-bs-target="#delete-modal" class="btn btn-danger"><i class="fa fa-trash"></i>Delete</button>
+                        </td>    
+                      </tr>
+                      
+                      <div class="text-end">
+                       <button type="submit" data-bs-toggle="modal" style="border-right-width: 0px;margin-right: 40px;" data-bs-target="#add-modal" class="btn btn-primary"><i class="bi bi-person-plus"></i> ADD</button> 
+                      </div>
+                    </tbody> 
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+
+      <!-- Modal ADD Button -->
+      <div class="modal fade" id="add-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Add User</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form class="needs-validation" novalidate>
+              <div class="modal-body">
+                <div class="form">
+                  <div class="row">
+                    <div class="row">
+                      <div class="col-md-6">
+                        <label for="firstname" class="form-label">First Name</label>
+                        <input type="text" class="form-control" id="input-firstname" required>
+                        <div class="invalid-feedback">
+                          Please Enter First Name.
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <label for="lastname" class="form-label">Last Name</label>
+                        <input type="text" class="form-control" id="input-lastname" required>
+                        <div class="invalid-feedback">
+                          Please Enter Last Name.
+                        </div>
+                      </div>                      
+                    </div>
+
+                    <div class="col-md-12 mb-1">
+                      <label for="user-name" class="form-label">Username</label>
+                      <input type="text" class="form-control" id="input-username" required >
+                      <div class="invalid-feedback">
+                        Please Enter User Name.
+                      </div>
+                    </div>
+                    <div class="col-md-12 mb-1">
+                      <label for="password" class="form-label">Password</label>
+                      <input type="password" class="form-control" id="input-password" required >
+                      <div class="invalid-feedback">
+                        Please Enter Password.
+                      </div>
+                    </div>                    
+                  </div>
+                  <div class="col-md-12">
+                    <label for="emil" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="input-email" required >
+                    <div class="invalid-feedback">
+                      Please Enter Email.
+                    </div>
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label for="user-role" class="form-label"> User Role </label>
+                    <select class="form-select" style="margin-top: 7px;margin-bottom: 7px;padding-top: 9px;padding-bottom: 9px;" id="input-role" required>
+                      <option selected disabled value="">Select Role...</option>
+                      <option value="1">ADMIN</option>
+                      <option value="2">STAFF</option>
+                    </select>
+                    <div class="invalid-feedback">
+                      Please select a role.
+                    </div>
+                  </div>
+                </div>                                   
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit-addroom" class="btn btn-primary">Submit</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal Edit Button -->
+      <div class="modal fade" id="edit-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Edit User</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form class="needs-validation" novalidate>
+              <div class="modal-body">
+                <div class="form">
+                  <div class="row">
+                    <div class="row">
+                      <div class="col-md-6">
+                        <label for="firstname" class="form-label">First Name</label>
+                        <input type="text" class="form-control" id="input-firstname" required>
+                        <div class="invalid-feedback">
+                          Please Enter First Name.
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <label for="lastname" class="form-label">Last Name</label>
+                        <input type="text" class="form-control" id="input-lastname" required>
+                        <div class="invalid-feedback">
+                          Please Enter Last Name.
+                        </div>
+                      </div>                      
+                    </div>
+
+                    <div class="col-md-12 mb-1">
+                      <label for="user-name" class="form-label">Username</label>
+                      <input type="text" class="form-control" id="input-username" required >
+                      <div class="invalid-feedback">
+                        Please Enter User Name.
+                      </div>
+                    </div>                    
+                  </div>
+                  <div class="col-md-12">
+                    <label for="emil" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="input-email" required >
+                    <div class="invalid-feedback">
+                      Please Enter Email.
+                    </div>
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label for="user-role" class="form-label"> User Role </label>
+                    <select class="form-select" style="margin-top: 7px;margin-bottom: 7px;padding-top: 9px;padding-bottom: 9px;" id="input-role" required>
+                      <option selected disabled value="">Select Role...</option>
+                      <option value="1">ADMIN</option>
+                      <option value="2">STAFF</option>
+                    </select>
+                    <div class="invalid-feedback">
+                      Please select a role.
+                    </div>
+                  </div>
+                </div>                                   
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit-addroom" class="btn btn-primary">Submit</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal Delete Button -->
+      <div class="modal fade" id="delete-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Delete Member</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form class="needs-validation" novalidate>
+              <div class="modal-body">
+                Do you want to delete this member?
+              </div>  
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit-addroom" class="btn btn-danger">Delete</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>      
+    </main>
+  </body>
+</html>
+
+
+
+
+<script src="/public/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.0.2/dist/chart.min.js"></script>
+<script src="/public/js/jquery-3.5.1.js"></script>
+<script src="/public/js/jquery.dataTables.min.js"></script>
+<script src="/public/js/dataTables.bootstrap5.min.js"></script>
+<script src="/public/js/script.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap-switch-button@1.1.0/dist/bootstrap-switch-button.min.js"></script>
+<link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap-switch-button@1.1.0/css/bootstrap-switch-button.min.css" rel="stylesheet">
+
+<script>
+  var Feature = (function(){
+      var dataTable = $('#table-user-id').DataTable({
+        language : {emptyTable: "ไม่พบข้อมูล"},
+        searching: false,
+        ordering: false,
+        lengthChange: false,
+        paging: false,
+        bAutoWidth: false,
+      })
+      return {
+          init: function(){
+
+          },
+          onSubmitAddUser:  function(){
+            'use strict'
+
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            var forms = document.querySelectorAll('.needs-validation')
+          
+            // Loop over them and prevent submission
+            Array.prototype.slice.call(forms)
+              .forEach(function (form) {
+                form.addEventListener('submit', function (event) {
+                  if (!form.checkValidity()) {
+                    event.preventDefault()
+                    event.stopPropagation()
+                  }
+          
+                  form.classList.add('was-validated')
+                }, false)
+              })
+          },
+      }
+  })();
+
+  jQuery(document).ready(function(){
+      Feature.onSubmitAddUser();
+  });
+
+
+  function clickApiOn() {
+    document.getElementById('switch-trigger').switchButton('on');
+  }
+  function clickApiOff() {
+    document.getElementById('switch-trigger').switchButton('off');
+  }
+  
+
+</script>
+
