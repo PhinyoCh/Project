@@ -29,13 +29,16 @@ app.use(
 )
 
 //require API
-var LoginRoutes = require("./routes/Login");
-var RoomDataRoutes = require("./routes/ManageRoomData");
-var ConnectionRoutes = require("./routes/Connection");
+var LoginRoutes = require("./routes/login.route");
+var RoomDataRoutes = require("./routes/index.route");
+var ProfileRoutes = require("./routes/profile.route");
+var EditProfileRoutes = require("./routes/editprofile.route");
+var RequestRoutes = require("./routes/request.route");
+var UserManageRoutes = require("./routes/user_manage.route");
 
 //use API
-app.use("/RoomData",RoomDataRoutes);
-app.use("/Connection", ConnectionRoutes);
+app.use("/",RoomDataRoutes);
+
 
 //Socket
 const io = require("socket.io")(server, { cors: { origin: "*" } });
