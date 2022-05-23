@@ -5,20 +5,27 @@ module.exports = {
         return db.query(
             "SELECT * FROM `user` AS u WHERE u.username = ?",
             [username], 
-            (resolve, reject)=>{
+            (resolve, reject) => {
                 try {
-                    Login.checkUser(username, (err, rows) => {
+                    (err, rows) => {
                         if (rows != null){
                             resolve(rows);
                         }else{
                             resolve(false);
                         }
-                    });
+                    }
                 } catch (err) {
                     console.log(err);
                     resolve(false);
                 }
             }
+        );
+    },
+    addUser: function (date,password, callback){
+        return db.query(
+            "SELECT * FROM `user` AS u WHERE u.username = ?",
+            [username], 
+            callback
         );
     }
 }
