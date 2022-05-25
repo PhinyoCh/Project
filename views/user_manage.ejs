@@ -10,7 +10,7 @@
 
               <div class="card-body">
                 <div class="table-responsive">
-                  <table id="table-room-id" class="table" style="width: 100%">
+                  <table id="table-user-id" class="table" style="width: 100%">
                     <thead>                     
                       <tr>
                         <th class="text-center">NUMBER</th>
@@ -254,11 +254,12 @@
   var Feature = (function(){
       var dataTable = $('#table-user-id').DataTable({
         language : {emptyTable: "ไม่พบข้อมูล"},
-        searching: false,
         ordering: false,
+        searching: false,
         lengthChange: false,
         paging: false,
         bAutoWidth: false,
+        info: false,
       })
       return {
           init: function(){

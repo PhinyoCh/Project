@@ -110,9 +110,9 @@
                       </tr>
 
                       <div class="text-end">
-                       <button class=" btn btn-success" onclick="clickApiOn()">All Play</button>
-                       <button class=" btn btn-danger" onclick="clickApiOff()">All Puase</button>
-                       <button type="submit" data-bs-toggle="modal" data-bs-target="#add-modal" class="btn btn-primary"><i class="bi bi-plus-square"></i>ADD</button> 
+                        <button class=" btn btn-success" onclick="clickApiOn()">All Play</button>
+                        <button class=" btn btn-danger" onclick="clickApiOff()">All Puase</button>
+                        <button type="submit" data-bs-toggle="modal" data-bs-target="#add-modal" class="btn btn-primary"><i class="bi bi-plus-square"></i>ADD</button> 
                       </div>
                     </tbody> 
                   </table>
@@ -188,7 +188,7 @@
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Add Room</h5>
+              <h5 class="modal-title" id="exampleModalLabel">Edit Room</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form class="needs-validation" novalidate>
@@ -197,7 +197,7 @@
                   <div class="row">
                     <div class="col-md-12 mb-3">
                       <label for="room-name" class="form-label"> Room Name </label>
-                      <input type="text" class="form-control" id="input-roomname" required >
+                      <input type="text" class="form-control" id="input-editroomname" required >
                       <div class="invalid-feedback">
                         Please Enter Room Name.
                       </div>
@@ -206,14 +206,14 @@
                   <div class="row">
                     <div class="col-md-6 mb-3">
                       <label for="room-number" class="form-label"> Room Number </label>
-                      <input type="text" class="form-control" id="input-roomnumber" required>
+                      <input type="text" class="form-control" id="input-editroomnumber" required>
                       <div class="invalid-feedback">
                         Please Enter Room Number.
                       </div>
                     </div>
                     <div class="col-md-6 mb-3">
                       <label for="room-name" class="form-label"> Floor </label>
-                      <select class="form-select" style="margin-top: 7px;margin-bottom: 7px;padding-top: 9px;padding-bottom: 9px;" id="input-floor" required>
+                      <select class="form-select" style="margin-top: 7px;margin-bottom: 7px;padding-top: 9px;padding-bottom: 9px;" id="input-editfloor" required>
                         <option selected disabled value="">Select Floor...</option>
                         <option value="1">1</option>
                         <option value="2">2</option>
@@ -237,7 +237,7 @@
               </div>  
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="submit-addroom" class="btn btn-primary">Submit</button>
+                <button type="submit-editroom" class="btn btn-primary">Submit</button>
               </div>
             </form>
           </div>
@@ -258,7 +258,7 @@
               </div>  
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="submit-addroom" class="btn btn-danger">Delete</button>
+                <button type="submit-delete" class="btn btn-danger">Delete</button>
               </div>
             </form>
           </div>
@@ -277,7 +277,7 @@
       <div class="text-center mt-3 ">
         <button type="submit" name="edit" class="btn btn-warning"><span class="btn-label"><i class="bi bi-music-player"></i></span>MP3</button>
         <button type="submit" name="delete" class="btn btn-danger"><span class="btn-label"><i class="bi bi-broadcast-pin"></i></span>LIVE</button>
-        <button type="submit" name="delete" class="btn btn-secondary">SELECT</button>
+        <button type="submit" name="select" class="btn btn-secondary">SELECT</button>
     </div>   
     </main>
   </body>
@@ -305,6 +305,7 @@
         lengthChange: false,
         paging: false,
         bAutoWidth: false,
+        info: false,
       })
       return {
           init: function(){

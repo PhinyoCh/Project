@@ -1,7 +1,7 @@
 const server_config = {};
 
 server_config.port = 5000; 
-server_config.url = 'http://localhost:'+ server_config.port +'/';
+server_config.url = 'http://localhost:'+ server_config.port;
 server_config.cookie_options = {
     maxAge: 86400 * 1000, // 24 hours
     httpOnly: true, // http only, prevents JavaScript cookie access

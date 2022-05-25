@@ -1,5 +1,7 @@
 const bcrypt = require("bcrypt");
 const user = require("../models/user.model");
+const {encrypt, decrypt} = require("../utils/encrypt_decrypt_tools")
+const config = require("../config/server.config")
 
 module.exports = {
     getPage: function(req, res){
@@ -9,12 +11,15 @@ module.exports = {
             let username = req.body.username;
             let password = req.body.password;
             console.log(password);
-            let dataUser = await user.getUserData(username);
+            let dataUser = await user.getUserWithPass(username);
             // return res.json({"length":dataUser[0]});
             if(dataUser.length > 0){
                 let match = await bcrypt.compare(password,dataUser[0]['password']);
                 if (match){
-                   return res.json({data: dataUser});
+                    await user.getUserData(username).then(function(result){
+                        res.cookie('usd', encrypt(JSON.stringify(result)),config.cookie_options);
+                        return res.json({status: "successes"})
+                    });
                 } else{
                    return res.json({status: "Failed", data: "Incorrect Password"});
                 }
@@ -34,5 +39,8 @@ module.exports = {
             ()=>{ return res.json({status:"Successes",data:"Registration is Successful"})}
         );
     }
+
+
+
 }
 

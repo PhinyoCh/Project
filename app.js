@@ -4,6 +4,7 @@ const app = express();
 const logger = require("morgan")
 const config = require('./config/server.config');
 const path = require('path');
+const cookieParser = require('cookie-parser');
 
 //listening port
 const server = app.listen(config.port, function() {
@@ -13,6 +14,7 @@ const server = app.listen(config.port, function() {
 //Static File
 app.use(express.static('public'));
 app.use('/', express.static(__dirname));
+app.use(cookieParser())
 
 //Set Views engine
 app.set('views',[
@@ -32,16 +34,19 @@ app.use(
 var LoginRoutes = require("./routes/login.route");
 var RoomDataRoutes = require("./routes/index.route");
 var ProfileRoutes = require("./routes/profile.route");
-var EditProfileRoutes = require("./routes/editprofile.route");
 var RequestRoutes = require("./routes/request.route");
 var UserManageRoutes = require("./routes/user_manage.route");
-var UploadFile = require("./routes/sound_manage.route");
+var UploadFileRoutes = require("./routes/sound_manage.route");
+var ReportRoutes = require("./routes/report.route");
 
 //use API
 app.use("/",RoomDataRoutes);
 app.use("/Login",LoginRoutes);
 app.use("/usermanage",UserManageRoutes);
-app.use("/upload",UploadFile);
+app.use("/upload",UploadFileRoutes);
+app.use("/request",RequestRoutes);
+app.use("/report",ReportRoutes);
+app.use("/profile",ProfileRoutes);
 
 //Socket
 const io = require("socket.io")(server, { cors: { origin: "*" } });

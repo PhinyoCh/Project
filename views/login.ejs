@@ -71,7 +71,10 @@
                                 password: post_password 
                             },
                             success: function (result) {
-                                console.log(result);
+                                console.log(result.status)
+                                if(result.status === 'successes'){
+                                    window.location.href = "/"
+                                }
                                 
                             },
                             error: function (err) {
