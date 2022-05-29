@@ -1,4 +1,4 @@
-const GetRoomData = require("../models/room.model.js");
+const room = require("../models/room.model.js");
 
 module.exports = {
     getAllRoom : async function (req, res, next){
@@ -6,6 +6,17 @@ module.exports = {
             console.log("Data ",allDataRoom)
             res.json({data : allDataRoom});
     },
+
+    searchRoom : async function (req, res, next){
+        let search = req.query.search;
+        if(!search){
+        let roomData = await room.getAllRoom();
+        res.send(roomData);
+        }else{
+            res.json({search:search});
+        }
+    },
+
     addRoom :  async function (req, res, next){
         var user_id = req.body.user_id;
         var room_name = req.body.room_name;

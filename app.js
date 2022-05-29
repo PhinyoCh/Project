@@ -5,6 +5,7 @@ const logger = require("morgan")
 const config = require('./config/server.config');
 const path = require('path');
 const cookieParser = require('cookie-parser');
+//import { useState, useEffect } from 'react';
 
 //listening port
 const server = app.listen(config.port, function() {
@@ -32,21 +33,26 @@ app.use(
 
 //require API
 var LoginRoutes = require("./routes/login.route");
+var LogoutRouter = require("./routes/logout.route");
 var RoomDataRoutes = require("./routes/index.route");
 var ProfileRoutes = require("./routes/profile.route");
 var RequestRoutes = require("./routes/request.route");
 var UserManageRoutes = require("./routes/user_manage.route");
 var UploadFileRoutes = require("./routes/sound_manage.route");
 var ReportRoutes = require("./routes/report.route");
+var testPlaySoundRoutes = require("./routes/test_play_sound.route");
+
 
 //use API
 app.use("/",RoomDataRoutes);
 app.use("/Login",LoginRoutes);
+app.use("/Logout", LogoutRouter);
 app.use("/usermanage",UserManageRoutes);
 app.use("/upload",UploadFileRoutes);
 app.use("/request",RequestRoutes);
 app.use("/report",ReportRoutes);
 app.use("/profile",ProfileRoutes);
+app.use("/testplaysound",testPlaySoundRoutes);
 
 //Socket
 const io = require("socket.io")(server, { cors: { origin: "*" } });

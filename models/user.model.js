@@ -15,6 +15,13 @@ module.exports = {
         return rows;
     },
 
+    getAllUserData:async function (){
+        var [rows] = await db.promise().query(
+            'SELECT `user_id`, `email`, `username`, `s_name`, `l_name`, `user_role`, `active`, `create_by`, `create_date`, `update_by`, `update_date` FROM `user` WHERE active = 1'
+            )
+        return rows;
+    },
+
     //function Add User
     addUser: function (data,hash_password, callback){
         return db.promise().query(
@@ -29,41 +36,40 @@ module.exports = {
                 data.user_role,
                 data.active,
                 data.user_id,
-                data.date,
+                data.create_date,
                 data.user_id,
-                data.date
+                data.update_date
             ]
         )
     },
 
-    editUser: function (data){
-        return db.promise().query(
-            "INSERT INTO `user`(`email`, `username`, `password`, `s_name`, `l_name`, `user_role`, `active`, `create_by`, `create_date`, `update_by`, `update_date`) "+
-            "VALUES (?,?,?,?,?,?,?,?,?,?,?) ",
+    editUser:async function (data,update_by){
+        var [rows,field] = await db.promise().query(
+            "UPDATE `user` SET `email` = ?, `s_name` = ?, `l_name` = ?, `user_role` = ?, `active` = ?, `update_by` = ?, `update_date` = ? WHERE `active` = '1' AND user_id = ?",
             [
                 data.email,
-                data.username,
-                hash_password,
                 data.s_name,
                 data.l_name,
                 data.user_role,
                 data.active,
-                data.user_id,
-                data.date,
-                data.user_id,
-                data.date
+                update_by,
+                data.update_date,
+                data.user_id
             ]
         )
+        return {rows,field};
     },
 
-    deleteUser: async function (user_id){
-        var [rows] = await db.promise().query(
-            "UPDATE `user` SET active = '0' WHERE user_id = (`user_id`) "+
-            "VALUES (?) ",
-            [
-                user_id
+    deleteUser: async function (data,update_by){
+        var [rows,field] = await db.promise().query(
+            "UPDATE `user` SET `active` = 0, `update_by` = ?, `update_date` = ? WHERE `active` = '1' AND user_id = ?",
+            [                
+                update_by,
+                data.update_date,
+                data.user_id
             ]
         )
+        return {rows,field};
     }
 
 }

@@ -13,63 +13,16 @@
                   <table id="table-sound-id" class="table" style="width: 100%">
                     <thead>                     
                       <tr>
-                        <th class="text-center">NUMBER</th>
+                        <th class="text-center">SOUND ID</th>
                         <th class="text-center">SOUND TYPE</th>
                         <th class="text-center">SOUND NAME</th>
                         <th class="text-center">SOUND DETAIL</th>
                         <th class="text-center">OPERACTION</th>
                       </tr>
-                    </thead>
-                    <tbody>
-                      
-                      <tr>
-                        <td class="text-center">1</td>
-                        <td class="text-center">Record File</td>
-                        <td class="text-center">Looking for students</td>
-                        <td class="text-center">ประกาศตามหา นายอิศเรศ ชายเสม ให้มาหาเพื่อนบ้าง อย่าไปหาแต่สาว</td>                 
-                        <td class="text-center">
-                          <button type="submit" name="edit" data-bs-toggle="modal" data-bs-target="#edit-modal" class="btn btn-primary"><i class="fa fa-edit"></i>Edit</button>
-                          <button type="submit" name="delete" data-bs-toggle="modal" data-bs-target="#delete-modal" class="btn btn-danger"><i class="fa fa-trash"></i>Delete</button>
-                        </td>    
-                      </tr>
-                      
-                      <tr>
-                        <td class="text-center">2</td>
-                        <td class="text-center">Upload File</td>
-                        <td class="text-center">Department of Music</td>
-                        <td class="text-center">เพลงประจำภาควิชา ไว้สำหรับเปิดงานพิธีการ</td>                 
-                        <td class="text-center">
-                          <button type="submit" name="edit" data-bs-toggle="modal" data-bs-target="#edit-modal" class="btn btn-primary"><i class="fa fa-edit"></i>Edit</button>
-                          <button type="submit" name="delete" data-bs-toggle="modal" data-bs-target="#delete-modal" class="btn btn-danger"><i class="fa fa-trash"></i>Delete</button>
-                        </td>    
-                      </tr>
-
-                      <tr>
-                        <td class="text-center">3</td>
-                        <td class="text-center">Upload File</td>
-                        <td class="text-center">Reminder to wear a mask</td>
-                        <td class="text-center">เสียงแจ้งประกาศให้นักศึกษาสวมแมส ก่อนเข้าภาค</td>                 
-                        <td class="text-center">
-                          <button type="submit" name="edit" data-bs-toggle="modal" data-bs-target="#edit-modal" class="btn btn-primary"><i class="fa fa-edit"></i>Edit</button>
-                          <button type="submit" name="delete" data-bs-toggle="modal" data-bs-target="#delete-modal" class="btn btn-danger"><i class="fa fa-trash"></i>Delete</button>
-                        </td>    
-                      </tr>
-
-                      <tr>
-                        <td class="text-center">4</td>
-                        <td class="text-center">Record File</td>
-                        <td class="text-center">Notify Students</td>
-                        <td class="text-center">ประกาศแจ้ง นายอิทธิลักษณ์ เต็มรัตน์ หอเพื่อนอยู่ติดกันเลย ไม่ต้องไปนอนถึงคลอง 4 เพื่อนเป็นห่วง</td>                 
-                        <td class="text-center">
-                          <button type="submit" name="edit" data-bs-toggle="modal" data-bs-target="#edit-modal" class="btn btn-primary"><i class="fa fa-edit"></i>Edit</button>
-                          <button type="submit" name="delete" data-bs-toggle="modal" data-bs-target="#delete-modal" class="btn btn-danger"><i class="fa fa-trash"></i>Delete</button>
-                        </td>    
-                      </tr>
-                      
-                      <div class="text-end">
-                       <button type="submit" data-bs-toggle="modal" style="border-right-width: 0px;margin-right: 55px;" data-bs-target="#upload-modal" class="btn btn-primary"><i class="bi bi-upload"></i> Upload</button> 
-                      </div>
-                    </tbody> 
+                    </thead>                    
+                    <div class="text-end">
+                      <button type="submit" data-bs-toggle="modal" style="border-right-width: 0px;margin-right: 80px;" data-bs-target="#upload-modal" class="btn btn-primary"><i class="bi bi-upload"></i> Upload</button> 
+                    </div>
                   </table>
                 </div>
               </div>
@@ -86,42 +39,39 @@
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form class="needs-validation" novalidate>
-                <div class="modal-body">
-                    <div class="form">
-                        <div class="row">                    
-                            <div class="col-md-12 mb-1">
-                                <label for="filename" class="form-label">Filename</label>
-                                <input type="text" class="form-control" id="input-filename" required >
-                                <div class="invalid-feedback">
-                                    Please Enter File Name.
-                                </div>
-                            </div>
-                            <div class="col-md-12 mb-1">
-                                <label for="filedetail" class="form-label">Detail</label>
-                                <input type="text" class="form-control" id="input-filedetail" required >
-                                <div class="invalid-feedback">
-                                    Please Enter Detail File.
-                                </div>
-                            </div>                    
-                        </div>
-                        <div class="mb-3">
-                            <label for="formFile" class="form-label">Please upload the audio file</label>
-                            <input class="form-control" type="file" id="formFile"  required>
-                            <div class="invalid-feedback">
-                              Please Upload Sound File.
-                          </div>
-                        </div>                  
-                    </div>                                   
-                </div>
-                <div class="modal-footer">
+              <div class="modal-body">
+                <div class="form">
+                  <div class="row">                    
+                    <div class="col-md-12 mb-1">
+                      <label for="filename" class="form-label">Filename</label>
+                      <input type="text" class="form-control" id="input-filename" required >
+                      <div class="invalid-feedback">
+                        Please Enter File Name.
+                      </div>
+                    </div>
+                    <div class="col-md-12 mb-1">
+                      <label for="filedetail" class="form-label">Detail</label>
+                      <input type="text" class="form-control" id="input-filedetail" required >
+                      <div class="invalid-feedback">
+                        Please Enter Detail File.
+                      </div>
+                    </div>                    
+                  </div>
+                  <label for="formFile" class="form-label">Please upload the audio file</label>
+                  <input type="file" class="form-control" id="fileupload" required>
+                  <div class="invalid-feedback">
+                    Please Upload Sound File.
+                  </div>  
+                  <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit-upload" class="btn btn-primary">Submit</button>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                  </div>
                 </div>
-            </form>
+              </div>
+            </form>            
           </div>
         </div>
       </div>
-
       <!-- Modal Edit Button -->
       <div class="modal fade" id="edit-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -159,27 +109,6 @@
           </div>
         </div>
       </div>
-
-      <!-- Modal Delete Button -->
-      <div class="modal fade" id="delete-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Delete Sound File</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <form class="needs-validation" novalidate>
-              <div class="modal-body">
-                Do you want to delete this sound file?
-              </div>  
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="submit-delfile" class="btn btn-danger">Delete</button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>      
     </main>
   </body>
 </html>
@@ -194,8 +123,11 @@
 <script src="/public/js/dataTables.bootstrap5.min.js"></script>
 <script src="/public/js/script.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap-switch-button@1.1.0/dist/bootstrap-switch-button.min.js"></script>
-<link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap-switch-button@1.1.0/css/bootstrap-switch-button.min.css" rel="stylesheet">
+<link href="//cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css" rel="stylesheet">
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+<link rel="stylesheet" href="/node_modules/@sweetalert2/themes/dark/dark.css">
+<script src="/node_modules/sweetalert2//dist/sweetalert2.min.js"></script>
+
 
 <script>
   var Feature = (function(){
@@ -207,12 +139,135 @@
         paging: false,
         bAutoWidth: false,
         info: false,
+        
+        columns: [
+          { 
+            data: function (data) {
+              return data['record_id'];                  // ข้อมูล ' ลำดับ '
+            },
+            className : 'text-center',              // จัดให้ข้อมูลอยู่ตรงกลาง
+          },
+          { 
+            data: function (data) {
+              if(data['record_type'] == 1){
+                record_type = 'Upload File';
+              } else if(data['record_type'] == 2) {
+                record_type = 'Record File'
+              }
+              return record_type;  
+            },
+            className : 'text-center',              // จัดให้ข้อมูลอยู่ตรงกลาง
+          },
+          { 
+            data: function (data) {
+              return data['record_name'];                  // ข้อมูล ' ลำดับ '
+            },
+            className : 'text-center',              // จัดให้ข้อมูลอยู่ตรงกลาง
+          },
+          { 
+            data: function (data) {
+              return data['record_detail'];                  // ข้อมูล ' ลำดับ '
+            },
+            className : 'text-center',              // จัดให้ข้อมูลอยู่ตรงกลาง
+          },          
+          { 
+            data: function (data) {
+              return '<button type="submit" name="edit" class="btn btn-primary"><i class="fa fa-edit"></i>Edit</button>\
+              <button type="submit" name="delete_data" class="btn btn-danger"><i class="fa fa-trash"></i>Delete</button>';                  // ข้อมูล ' ลำดับ '
+            },
+            className : 'text-center',              // จัดให้ข้อมูลอยู่ตรงกลาง
+          }
+        ],
+        serverSide: true,   // เปิดการรับ - ส่งข้อมูลของตาราง
+        ajaxSource: '/upload/searchRecord',   // path สำหรับการรับ - ส่งข้อมูล (service)
+        serverData: function(sSource, aaData, fnCallback, oSettings) { // สร้าง function สำหรับการรับ - ส่งข้อมูล
+            //aaData.push({ "name": "search", "value": aaSearch});     // กำหนดข้อมูลที่จะค้นหา
+            oSettings.jqXHR = $.ajax({  // รับ - ส่งข้อมูลโดยใช้ ajax
+                dataType: 'json',       // กำหนดรูปแบบข้อมูลเป็น json
+                type: "POST",           // กำหนดประเภทการส่งแบบ POST
+                url: sSource,           // path สำหรับการรับ - ส่งข้อมูล (ajaxSource)
+                data: aaData,           // ข้อมูลที่ส่ง 
+                success: function (response) {  // ถ้าติดต่อสำเร็จ
+                   if(response === undefined){
+                    response = {"aaData":[], "iTotalRecords": 0, "iTotalDisplayRecords": 0};    // จัดเรียงข้อมูลที่ได้รับใหม่ --> -->
+
+                   }else{
+                    response = {"aaData": response, "iTotalRecords": response.length, "iTotalDisplayRecords": response.length}; // จัดเรียงข้อมูลที่ได้รับใหม่
+                     
+                   }
+
+                    fnCallback(response);   // นำข้อมูลกลับขึ้นไป loop ใน columns
+                }
+            });
+        }
       })
       return {
           init: function(){
 
           },
-          onSubmitAddUser:  function(){
+          initialButton : function initialButton() {
+            //getData
+            $('#table-sound-id').on('click', '[name="edit_data"]', function () {  // ปุ่ม 'แก้ไข' ของข้อมูลบุคลากรในแถวตารางข้อมูล
+              var data = $(this).data();  // รับข้อมูลจากปุ่มแก้ไข ที่กดในแถวตารางข้อมูล
+              // set value
+              id_update = data.id;                            // เก็บข้อมูล id ของข้อมูลบุคลากร
+              $('#input-editfirstname').val(data.s_name);               // นำข้อมูล response ของรหัส RFID มาใส่ในฟอร์ม 'รหัส RFID' ข้อมูลบุคลากร
+              $('#input-editlastname').val(data.l_name);     // นำข้อมูล response ของชื่อ มาใส่ในฟอร์ม 'ชื่อ' ข้อมูลบุคลากร
+              $('#input-editusername').val( data.username);      // นำข้อมูล response ของนามสกุล มาใส่ในฟอร์ม 'นามสกุล' ข้อมูลบุคลากร
+              $('#input-editemail').val(data.email);       // นำข้อมูล response ของรหัสพนักงานมาใส่ในฟอร์ม 'รหัสพนักงาน' ข้อมูลบุคลากร
+              $("#input-editrole").val(data.user_role);                  // นำข้อมูล response ของรหัสผ่าน มาใส่ในฟอร์ม 'รหัสผ่าน' ข้อมูลบุคลากร
+            });
+            
+            //delete
+            $('#table-sound-id').on('click', '[name="delete_data"]', function () {    // ปุ่ม 'ลบ' ของข้อมูลบุคลากรในแถวตารางข้อมูล
+              var data = $(this).data();
+              var user_id = data.id; 
+              Swal.fire({
+                title: 'Are you sure?',
+                text: "Do you want to delete this User ?",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+              }).then((result) => {
+                const now = new Date();                                                                     //
+                const offsetMs = now.getTimezoneOffset() * 60 * 1000;                                       //
+                const dateLocal = new Date(now.getTime() - offsetMs);                                       //  >> รับค่าวันที่และเวลา ปัจจุบัน
+                const str = dateLocal.toISOString().slice(0, 19).replace(/-/g, "/").replace("T", " ");      //
+                    dateNow = str; //user dateNow
+
+                $.ajax({ 
+                      url: '/upload/PostRemoveSound',
+                      data: {
+                        /*"user_id": user_id,
+                        "update_date":dateNow,*/
+                      },
+                      type: 'post',
+                      success: function(response)
+                      {
+                        if(response.status == 'error self remove'){
+                          Swal.fire({
+                            icon: 'error',
+                            title: 'Sorry...',
+                            text: 'You cannot delete this user!'
+                          })
+                        } 
+                        else if (response.status == 'successes'){
+                          Swal.fire(
+                            'Succeed!',
+                            'User Deletion Succeeded.',
+                            'success'
+                          ).then(function(){
+                            dataTable.ajax.reload();
+                          });                          
+                        }
+                      }
+                });              
+              })                  
+            });
+          },
+          onSubmitAddSound:  function(){
             'use strict'
 
             // Fetch all the forms we want to apply custom Bootstrap validation styles to
@@ -225,6 +280,18 @@
                   if (!form.checkValidity()) {
                     event.preventDefault()
                     event.stopPropagation()
+                  } else {
+                    event.preventDefault();
+                    const now = new Date();                                                                     //
+                    const offsetMs = now.getTimezoneOffset() * 60 * 1000;                                       //
+                    const dateLocal = new Date(now.getTime() - offsetMs);                                       //  >> รับค่าวันที่และเวลา ปัจจุบัน
+                    const str = dateLocal.toISOString().slice(0, 19).replace(/-/g, "/").replace("T", " ");      //
+                        dateNow = str; //user dateNow
+
+                    const name = $('#');
+                    const detail = $('#')
+                    const files = document.getElementById("files");
+                    const formData = new FormData();
                   }
           
                   form.classList.add('was-validated')
@@ -235,7 +302,8 @@
   })();
 
   jQuery(document).ready(function(){
-      Feature.onSubmitAddUser();
+      Feature.onSubmitAddSound();
+      Feature.initialButton();
   });
 
   

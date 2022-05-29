@@ -1,24 +1,11 @@
 const db = require("../config/dbconnection");
 
 module.exports = {
-    getAllDataRoom: function (callback){
-        return db.query(
-            "SELECT * FROM `room` AS r WHERE r.active = 0", 
-            (resolve, reject) => {
-                try {
-                    (err, rows) => {
-                        if (rows != null){
-                            resolve(rows);
-                        }else{
-                            resolve(false);
-                        }
-                    }
-                } catch (err){
-                    console.log(err);
-                    resolve(false);
-                }
-            }
-        );
+    getAllRoom:async function (callback){
+        var [rows] = await db.promise().query(
+            'SELECT * FROM `room` WHERE active = 1',
+            )
+        return rows;
     },
 
     addRoom: function (data, callback){
@@ -48,7 +35,3 @@ module.exports = {
         );
     }
 }
-
-
-
-module.exports = Roomdata;

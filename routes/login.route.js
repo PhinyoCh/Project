@@ -1,12 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const LoginController = require('../controllers/user.controller');
+const initial = require('../controllers/initial.controller')
+const validation = require('../middleware/validation.middleware');
 
 /* Get Index Page*/
-router.get('/',LoginController.getPage)
-
+router.get('/', validation.isLogged,initial.renderLogin);
 
 /*Post User Login*/ 
-router.post("/PostLogin",LoginController.checkUserLogin)
+router.post("/PostLogin",validation.isLogged, LoginController.checkUserLogin);
 
 module.exports = router;

@@ -2,17 +2,12 @@ const bcrypt = require("bcrypt");
 const user = require("../models/user.model");
 const {encrypt, decrypt} = require("../utils/encrypt_decrypt_tools")
 const config = require("../config/server.config")
-
 module.exports = {
-    getPage: function(req, res){
-        res.render('login');
-    },
+    
     checkUserLogin: async function (req, res, next){
             let username = req.body.username;
             let password = req.body.password;
-            console.log(password);
             let dataUser = await user.getUserWithPass(username);
-            // return res.json({"length":dataUser[0]});
             if(dataUser.length > 0){
                 let match = await bcrypt.compare(password,dataUser[0]['password']);
                 if (match){
@@ -27,6 +22,10 @@ module.exports = {
                 return res.json({status: "Failed", data: "This username isn't exist"});
             }
     },
+    logout : function(req,res,next){
+        res.clearCookie("usd");
+        res.status(200).redirect(config.url + '/Login');
+    },
     regisUser :async function(req, res){
         var username = req.body.username;
         var password = req.body.password;
@@ -38,6 +37,35 @@ module.exports = {
         await user.addUser(req.body,hash_password).then(
             ()=>{ return res.json({status:"Successes",data:"Registration is Successful"})}
         );
+    },
+    searchUser : async function (req, res, next){
+        let search = req.query.search;
+        if(!search){
+        let userData = await user.getAllUserData();
+        res.send(userData);
+        }else{
+            res.json({search:search});
+        }
+    },
+    editUser : async function(req,res){
+        let update_by =  JSON.parse(decrypt(req.cookies.usd))[0].user_id;
+        await user.editUser(req.body,update_by).then(function(){
+            return res.json({status:'successes'});
+        })
+        
+    },
+    removeUser : async function(req,res){
+        var update_by =  JSON.parse(decrypt(req.cookies.usd))[0].user_id;
+        var user_id = req.body.user_id;
+        var update_date = req.body.update_date;
+        if(user_id == update_by){
+           return res.json({status:'error self remove'});
+        }
+        await user.deleteUser(req.body,update_by).then(function(){
+            return res.json({status:'successes','update_by':update_by,'user_id':user_id,'update_date':update_date});
+            
+        });
+        
     }
 
 
