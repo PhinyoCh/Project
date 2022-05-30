@@ -2,13 +2,13 @@ const express = require('express');
 const authController = require('../controllers/auth.controller');
 const router = express.Router();
 const AuthController = require('../controllers/auth.controller');
-const initial = require('../controllers/initial.controller')
+const RenderController = require('../controllers/render.controller')
 const validation = require('../middleware/validation.middleware');
 
 /* Get Index Page*/
-router.get('/', validation.isLogged,initial.renderLogin);
+router.get('/', validation.isLogged,RenderController.renderLogin);
 
 /*Post User Login*/ 
-router.post("/PostLogin",validation.isLogged, authController.Login);
+router.post("/PostLogin",validation.isLogged, AuthController.Login);
 
 module.exports = router;
