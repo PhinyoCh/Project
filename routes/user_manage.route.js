@@ -2,9 +2,9 @@ const express = require('express');
 const router = express.Router();
 const UserController = require('../controllers/user.controller');
 const validation = require('../middleware/validation.middleware')
-const initialController = require('../controllers/initial.controller');
+const RenderController = require('../controllers/render.controller')
 
-router.get('/', validation.isAuth, validation.isAdminRoute, initialController.renderUserManage);
+router.get('/', validation.isAuth, validation.isAdminRoute, RenderController.renderUserManage);
 
 router.post("/AddUserAccount",  UserController.regisUser);
 

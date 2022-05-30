@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const validation = require('../middleware/validation.middleware')
-const initialController = require('../controllers/initial.controller');
+const RenderController = require('../controllers/render.controller')
 
-router.get('/', validation.isAuth, initialController.renderProfile);
+router.get('/', validation.isAuth, RenderController.renderProfile);
 
 module.exports = router;
