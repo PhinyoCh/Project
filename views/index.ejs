@@ -141,7 +141,7 @@
                   <div class="row">
                     <div class="col-md-12 mb-3">
                       <label for="room-macaddress" class="form-label"> Mac Address </label>
-                      <input type="text" class="form-control" id="input-macaddress" required>
+                      <input type="text" class="form-control" id="input-editmacaddress" required disabled>
                       <div class="invalid-feedback">
                         Please Enter Mac Address.
                       </div>
@@ -151,7 +151,7 @@
               </div>  
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="submit-editroom" class="btn btn-primary">Submit</button>
+                <button id="submit-edit" type="submit-edit" class="btn btn-primary">Submit</button>
               </div>
             </form>
           </div>
@@ -244,7 +244,7 @@
           },
           { 
             data: function (data) {
-              return '<button type="submit" data-bs-toggle="modal" data-bs-target="#edit-modal" name="edit" class="btn btn-primary"\
+              return '<button type="submit" data-bs-toggle="modal" data-bs-target="#edit-modal" name="edit-room" class="btn btn-primary"\
                 data-room_id="' + data['room_id'] + '" data-room_name="' + data['room_name'] + '" data-room_number="' + data['room_number'] + '"\
                 data-mac_address="' + data['mac_address'] + '" data-ip_address="' + data['ip_address'] + '" data-floor="' + data['floor'] + '" \
                 data-status="' + data['status'] + '"><i class="fa fa-edit"></i>Edit</button>\
@@ -277,39 +277,33 @@
         }
       })
       return {
-          init: function(){
-
-          },
-          onSubmitAddRoom:  function(){
-            'use strict'
-
-            // Fetch all the forms we want to apply custom Bootstrap validation styles to
-            var forms = document.querySelectorAll('.needs-validation')
+        getDateNow: function(){
+          /* Update Date*/
+          const now = new Date();                                                                     //
+          const offsetMs = now.getTimezoneOffset() * 60 * 1000;                                       //
+          const dateLocal = new Date(now.getTime() - offsetMs);                                       //  >> รับค่าวันที่และเวลา ปัจจุบัน
+          const str = dateLocal.toISOString().slice(0, 19).replace(/-/g, "/").replace("T", " ");      //
+              dateNow = str; 
+            /**************/
+          return dateNow;
+        },
+        onClickEditBtn : function (){
+          $('#table-room-id').on('click', '[name="edit-room"]', function () {  // ปุ่ม 'แก้ไข' ของข้อมูลบุคลากรในแถวตารางข้อมูล
+          var data = $(this).data();  // รับข้อมูลจากปุ่มแก้ไข ที่กดในแถวตารางข้อมูล
+          glo_user_id = data.id;
+          // set value
+          $('#input-editroomname').val(data.room_name);               // นำข้อมูล response ของรหัส RFID มาใส่ในฟอร์ม 'รหัส RFID' ข้อมูลบุคลากร
+          $('#input-editroomnumber').val(data.room_number);     // นำข้อมูล response ของชื่อ มาใส่ในฟอร์ม 'ชื่อ' ข้อมูลบุคลากร
+          $('#input-editfloor').val( data.floor);      // นำข้อมูล response ของนามสกุล มาใส่ในฟอร์ม 'นามสกุล' ข้อมูลบุคลากร
+          $('#input-editmacaddress').val(data.mac_address);       // นำข้อมูล response ของรหัสพนักงานมาใส่ในฟอร์ม 'รหัสพนักงาน' ข้อมูลบุคลากร
+        });
+        },
           
-            // Loop over them and prevent submission
-            Array.prototype.slice.call(forms)
-              .forEach(function (form) {
-                form.addEventListener('submit', function (event) {
-                  if (!form.checkValidity()) {
-                    event.preventDefault()
-                    event.stopPropagation()
-                  }
-          
-                  form.classList.add('was-validated')
-                }, false)
-              })
-          },
-          switchEvent : function(){
-            $('#allon-switch').on('click',function(e){
-              console.log($('#switch-box').val());
-            })
-          }
       }
   })();
 
   jQuery(document).ready(function(){
-      Feature.onSubmitAddRoom();
-      Feature.switchEvent();
+      Feature.onClickEditBtn();
   });
 
 
