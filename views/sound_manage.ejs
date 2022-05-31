@@ -38,7 +38,7 @@
               <h5 class="modal-title" id="exampleModalLabel">Upload File</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form class="needs-validation" novalidate>
+            <form id="upload-form" class="needs-validation" novalidate>
               <div class="modal-body">
                 <div class="form">
                   <div class="row">                    
@@ -271,7 +271,7 @@
             'use strict'
 
             // Fetch all the forms we want to apply custom Bootstrap validation styles to
-            var forms = document.querySelectorAll('.needs-validation')
+            var forms = document.querySelectorAll('#upload-form.needs-validation')
           
             // Loop over them and prevent submission
             Array.prototype.slice.call(forms)
@@ -281,19 +281,51 @@
                     event.preventDefault()
                     event.stopPropagation()
                   } else {
+
                     event.preventDefault();
                     const now = new Date();                                                                     //
                     const offsetMs = now.getTimezoneOffset() * 60 * 1000;                                       //
                     const dateLocal = new Date(now.getTime() - offsetMs);                                       //  >> รับค่าวันที่และเวลา ปัจจุบัน
                     const str = dateLocal.toISOString().slice(0, 19).replace(/-/g, "/").replace("T", " ");      //
-                        dateNow = str; //user dateNow
-
-                    const name = $('#');
-                    const detail = $('#')
-                    const files = document.getElementById("files");
+                    var dateNow = str; //user dateNow
+                    const recordtype = 1;
+                    const roomname = $('#input-filename');
+                    const detail = $('#input-filedetail')
+                    const files = document.getElementById("fileupload");
                     const formData = new FormData();
+                    formData.append('record_type',recordtype);
+                    formData.append('record_name',roomname);
+                    formData.append('record_detail',detail);
+                    formData.append('update_date',dateNow);
+                    formData.append('files',files);
+
+                    $.ajax({ 
+                      url: '/upload/PostUpload',
+                      data: formData,
+                      processData: false,
+                      contentType: false,
+                      type:'Post',
+                      success: function(response)
+                      {
+                        // if(response.status == 'error self remove'){
+                        //   Swal.fire({
+                        //     icon: 'error',
+                        //     title: 'Sorry...',
+                        //     text: 'You cannot delete this user!'
+                        //   })
+                        // } 
+                        // else if (response.status == 'successes'){
+                        //   Swal.fire(
+                        //     'Succeed!',
+                        //     'User Deletion Succeeded.',
+                        //     'success'
+                        //   ).then(function(){
+                        //     dataTable.ajax.reload();
+                        //   });                          
+                        // }
+                      }
+                    });
                   }
-          
                   form.classList.add('was-validated')
                 }, false)
               })

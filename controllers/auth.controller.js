@@ -1,5 +1,8 @@
 const {encrypt, decrypt} = require("../utils/encrypt_decrypt_tools")
 const config = require("../config/server.config")
+const user = require("../models/user.model")
+const bcrypt =require('bcrypt');
+
 module.exports = { 
     Login: async function (req, res, next){
         let username = req.body.username;
