@@ -344,11 +344,9 @@
             });
           },    
           onSubmitEditUser : function(){
-            
             'use strict'
             // Fetch all the forms we want to apply custom Bootstrap validation styles to
             var forms = document.querySelectorAll('#edit-form.needs-validation')     
-            console.log(forms);
             // Loop over them and prevent submission
             Array.prototype.slice.call(forms)
               .forEach(function (form) {
@@ -379,12 +377,19 @@
                       },
                       type: 'post',
                       success: function(response)
-                      {
-                        if(response.status == 'error self remove'){
-                          Swal.fire('ไม่สามารถลบได้')
+                      {                        
+                        if(response.status == 'Failed'){
+                          Swal.fire({
+                            icon: 'error',
+                            title: 'Sorry...',
+                            text: "Can't edit this user."
+                          })
                         } 
                         else if (response.status == 'successes'){
-                          Swal.fire('ลบผู้ใช้สำเร็จ').then(function(){
+                          Swal.fire(
+                            'Succeed!',
+                            'User has been edit successfully.',
+                            'success').then(function(){
                             $('#edit-modal').modal('toggle');
                             dataTable.ajax.reload();
                           });
@@ -396,13 +401,11 @@
                   
                 }, false)
               })
-            
           }, 
           onSubmitAddUser:  function(){
             'use strict'
             // Fetch all the forms we want to apply custom Bootstrap validation styles to
             var forms = document.querySelectorAll('#add-form.needs-validation')     
-            console.log(forms);
             // Loop over them and prevent submission
             Array.prototype.slice.call(forms)
               .forEach(function (form) {
@@ -437,17 +440,32 @@
                       type: 'post',
                       success: function(response)
                       { 
-                        if(response.status == 'error self remove'){
-                          Swal.fire('เกิดข้อผิดพลาด')
+                        if(response.status == 'Failed'){
+                          Swal.fire({
+                            icon: 'error',
+                            title: 'Sorry...',
+                            text: "Can't add this user."}).then(function(){
+                              $('#input-addfirstname').val('');               // นำข้อมูล response ของรหัส RFID มาใส่ในฟอร์ม 'รหัส RFID' ข้อมูลบุคลากร
+                              $('#input-addlastname').val('');     // นำข้อมูล response ของชื่อ มาใส่ในฟอร์ม 'ชื่อ' ข้อมูลบุคลากร
+                              $('#input-addusername').val('');
+                              $('#input-addpassword').val('');  
+                              $('#input-addemail').val('');       // นำข้อมูล response ของรหัสพนักงานมาใส่ในฟอร์ม 'รหัสพนักงาน' ข้อมูลบุคลากร
+                              $("#input-addrole").val('');
+                              $('#add-modal').modal('toggle');
+                              dataTable.ajax.reload();
+                          });
                         } 
                         else if (response.status == 'Successes'){
-                          Swal.fire('เพิ่มผู้ใช้สำเร็จ').then(function(){
+                          Swal.fire(
+                            'Succeed!',
+                            'User has been added successfully.',
+                            'success').then(function(){
                             $('#add-modal').modal('toggle');
                             dataTable.ajax.reload();
                           });
-                          }
                         }
-                      });
+                      }
+                    });
                     }
                   form.classList.add('was-validated')
                   

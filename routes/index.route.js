@@ -8,6 +8,8 @@ router.get('/', validation.isAuth, RenderController.renderIndex);
 
 router.post("/search",RoomcController.searchRoom);
 
+router.post("/PostEditRoom", validation.isAdminRoute, RoomcController.editRoom);
 
+router.post("/PostRemoveRoom", validation.isAdminRoute, RoomcController.removeRoom);
 
 module.exports = router;

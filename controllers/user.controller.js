@@ -1,13 +1,14 @@
 const bcrypt = require("bcrypt");
 const user = require("../models/user.model");
+const {encrypt, decrypt} = require("../utils/encrypt_decrypt_tools");
 
 module.exports = {
-    
     
     regisUser :async function(req, res){
         var username = req.body.username;
         var password = req.body.password;
         let checkExist = await user.getUserData(username);
+        
         if (checkExist.length > 0){
             return res.json({status:"Failed",data:"Username already used"})
         }
