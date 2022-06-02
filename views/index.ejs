@@ -23,9 +23,9 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <div class="text-end">
-                        <button class=" btn btn-success" id="allon-switch">All On</button>
-                        <button class=" btn btn-danger" id="alloff-switch">All Off</button>
+                      <div class="text-end" mx-3>
+                        <!-- <button class=" btn btn-success" id="allon-switch">All On</button>
+                        <button class=" btn btn-danger" id="alloff-switch">All Off</button> -->
                         <% if (role == 'Admin') { %> 
                         <button type="submit" data-bs-toggle="modal" data-bs-target="#add-modal" class="btn btn-primary"><i class="bi bi-plus-square"></i>ADD</button> 
                         <% } %> 
@@ -46,13 +46,13 @@
               <h5 class="modal-title" id="exampleModalLabel">Add Room</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form class="needs-validation" novalidate>
+            <form id="add-form" class="needs-validation" novalidate>
               <div class="modal-body">
                 <div class="form">
                   <div class="row">
                     <div class="col-md-12 mb-3">
                       <label for="room-name" class="form-label"> Room Name </label>
-                      <input type="text" class="form-control" id="input-roomname" required >
+                      <input type="text" class="form-control" id="input-addroomname" required >
                       <div class="invalid-feedback">
                         Please Enter Room Name.
                       </div>
@@ -61,14 +61,14 @@
                   <div class="row">
                     <div class="col-md-6 mb-3">
                       <label for="room-number" class="form-label"> Room Number </label>
-                      <input type="text" class="form-control" id="input-roomnumber" required>
+                      <input type="text" class="form-control" id="input-addroomnumber" required>
                       <div class="invalid-feedback">
                         Please Enter Room Number.
                       </div>
                     </div>
                     <div class="col-md-6 mb-3">
                       <label for="room-name" class="form-label"> Floor </label>
-                      <select class="form-select" style="margin-top: 7px;margin-bottom: 7px;padding-top: 9px;padding-bottom: 9px;" id="input-floor" required>
+                      <select class="form-select" style="margin-top: 7px;margin-bottom: 7px;padding-top: 9px;padding-bottom: 9px;" id="input-addfloor" required>
                         <option selected disabled value="">Select Floor...</option>
                         <option value="1">1</option>
                         <option value="2">2</option>
@@ -82,7 +82,7 @@
                   <div class="row">
                     <div class="col-md-12 mb-3">
                       <label for="room-macaddress" class="form-label"> Mac Address </label>
-                      <input type="text" class="form-control" id="input-macaddress" required>
+                      <input type="text" class="form-control" id="input-addmacaddress" required>
                       <div class="invalid-feedback">
                         Please Enter Mac Address.
                       </div>
@@ -160,20 +160,88 @@
         </div>
       </div>
 
-      <br>
-      <div class="container col-md-3 border-center">
-        <select class="form-select" aria-label="Default select example">
-           <option selected>Time Menu</option>
-           <option value="1">Day</option>
-           <option value="2">Week</option>
-           <option value="3">Month</option>
-        </select>
+      <!-- Modal Mode File -->
+      <div class="modal fade" id="modefile-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Mode Select File</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="add-form" class="needs-validation" novalidate>
+              <div class="modal-body">
+                <div class="form">
+                  <div class="row">
+                    <div class="row">
+                      <div class="col-md-6">
+                        <label for="firstname" class="form-label">First Name</label>
+                        <input type="text" class="form-control" id="input-addfirstname" required>
+                        <div class="invalid-feedback">
+                          Please Enter First Name.
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <label for="lastname" class="form-label">Last Name</label>
+                        <input type="text" class="form-control" id="input-addlastname" required>
+                        <div class="invalid-feedback">
+                          Please Enter Last Name.
+                        </div>
+                      </div>                      
+                    </div>
+
+                    <div class="col-md-12 mb-1">
+                      <label for="user-name" class="form-label" >Username</label>
+                      <input type="text" class="form-control" id="input-addusername" required >
+                      <div class="invalid-feedback">
+                        Please Enter User Name.
+                      </div>
+                    </div>
+                    <div class="col-md-12 mb-1">
+                      <label for="password" class="form-label">Password</label>
+                      <input type="password" class="form-control" id="input-addpassword" required >
+                      <div class="invalid-feedback">
+                        Please Enter Password.
+                      </div>
+                    </div>                    
+                  </div>
+                  <div class="col-md-12">
+                    <label for="emil" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="input-addemail" required >
+                    <div class="invalid-feedback">
+                      Please Enter Email.
+                    </div>
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label for="user-role" class="form-label"> User Role </label>
+                    <select class="form-select" style="margin-top: 7px;margin-bottom: 7px;padding-top: 9px;padding-bottom: 9px;" id="input-addrole" required>
+                      <option selected disabled value="">Select Role...</option>
+                      <option value="1">STAFF</option>
+                      <option value="2">ADMIN</option>
+                    </select>
+                    <div class="invalid-feedback">
+                      Please select a role.
+                    </div>
+                  </div>
+                </div>                                   
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit-addroom" class="btn btn-primary">Submit</button>
+              </div>
+            </form>
+          </div>
+        </div>
       </div>
-      <div class="text-center mt-3 ">
-        <button type="submit" name="edit" class="btn btn-warning"><span class="btn-label"><i class="bi bi-music-player"></i></span>MP3</button>
-        <button type="submit" name="delete" class="btn btn-danger"><span class="btn-label"><i class="bi bi-broadcast-pin"></i></span>LIVE</button>
-        <button type="submit" name="select" class="btn btn-secondary">SELECT</button>
-    </div>   
+
+      <br>
+      <div class="container col-md-2 border-center">
+        <select class="form-select" id="dropdown-mode">
+          <option selected disabled value="">Mode Play Sound</option>
+          <option value="1">MP3 File</option>
+          <option value="2">LIVE Streaming</option>
+        </select>
+        <button type="submit" name="select-mode" onclick="onClickMode()" style="border-top-width: 1px;margin-top: 10px;margin-left: 50px;" class="btn btn-secondary">SELECT</button>
+      </div> 
     </main>
   </body>
 </html>
@@ -194,9 +262,30 @@
 <script src="/node_modules/sweetalert2//dist/sweetalert2.min.js"></script>
 
 <script>
+
+  function onClickMode(){
+    let mode = $("#dropdown-mode").val();
+    if (mode == 1){
+      $('#modefile-modal').modal('toggle');
+    } else if (mode == 2){
+      Swal.fire({
+        icon: 'info',
+        title: 'Sorry',
+        text: 'This mode is under development.',
+      })
+    } else {
+      Swal.fire({
+        icon: 'warning',
+        text: 'You did not select the mode Please select a mode.',
+      })
+    }
+
+  }
+
   var Feature = (function(){
       let glo_room_id;
       let glo_role = '<%=role %>';
+      let glo_state;
       var dataTable = $('#table-room-id').DataTable({
         language : {emptyTable: "ไม่พบข้อมูล"},
         ordering: false,
@@ -214,19 +303,19 @@
           },
           { 
             data: function (data) {
-              return data['room_number'];                  // ข้อมูล ' ลำดับ '
+              return data['room_number'];                  // ข้อมูล ' เลขห้อง '
             },
             className : 'text-center',              // จัดให้ข้อมูลอยู่ตรงกลาง
           },
           { 
             data: function (data) {
-              return data['room_name'];                  // ข้อมูล ' ลำดับ '
+              return data['room_name'];                  // ข้อมูล ' ชื่อห้อง '
             },
             className : 'text-center',              // จัดให้ข้อมูลอยู่ตรงกลาง
           },
           { 
             data: function (data) {
-              return data['floor'];                  // ข้อมูล ' ลำดับ '
+              return data['floor'];                  // ข้อมูล ' ชั้น '
             },
             className : 'text-center',              // จัดให้ข้อมูลอยู่ตรงกลาง
           },
@@ -238,7 +327,7 @@
               } else {
                 status = '<span class="btn btn-success">Active</span>'
               }
-              return status;                  // ข้อมูล ' ลำดับ '
+              return status;                  // ข้อมูล ' สเตตัส Node '
             },
             className : 'text-center',              // จัดให้ข้อมูลอยู่ตรงกลาง
           },
@@ -297,6 +386,71 @@
           return dateNow;
         },
 
+        // ฟังก์ชั่น เมื่อ กดปุ่ม Submit Add
+        onSubmitAddRoom:  function(){
+          'use strict'
+          // Fetch all the forms we want to apply custom Bootstrap validation styles to
+          var forms = document.querySelectorAll('#add-form.needs-validation')     
+          // Loop over them and prevent submission
+          Array.prototype.slice.call(forms)
+            .forEach(function (form) {
+              form.addEventListener('submit', function (event) {
+                if (!form.checkValidity()) {
+                  event.preventDefault();
+                  event.stopPropagation();
+                }else{
+                  event.preventDefault();
+                  let dateNow = Feature.getDateNow();
+                  let room_name = $('#input-addroomname').val();               // นำข้อมูล response ของรหัส RFID มาใส่ในฟอร์ม 'รหัส RFID' ข้อมูลบุคลากร
+                  let room_number = $('#input-addroomnumber').val();     // นำข้อมูล response ของชื่อ มาใส่ในฟอร์ม 'ชื่อ' ข้อมูลบุคลากร
+                  let floor = $('#input-addfloor').val();
+                  let mac_address = $('#input-addmacaddress').val();  
+                  $.ajax({ 
+                    url: '/PostAddRoom',
+                    data: {
+                      "room_name":room_name,
+                      "room_number":room_number,
+                      "floor":floor,
+                      "mac_address":mac_address,
+                      "status":0,
+                      "active":1,
+                      "update_date":dateNow,
+                      "create_date":dateNow,
+                    },
+                    type: 'post',
+                    success: function(response)
+                    { 
+                      if(response.status == 'Failed'){
+                        Swal.fire({
+                          icon: 'error',
+                          title: 'Sorry...',
+                          text: "Can't add this room."}).then(function(){
+                            let room_name = $('#input-addroomname').val('');               // นำข้อมูล response ของรหัส RFID มาใส่ในฟอร์ม 'รหัส RFID' ข้อมูลบุคลากร
+                            let room_number = $('#input-addroomnumber').val('');     // นำข้อมูล response ของชื่อ มาใส่ในฟอร์ม 'ชื่อ' ข้อมูลบุคลากร
+                            let floor = $('#input-addfloor').val('');
+                            let mac_address = $('#input-addmacaddress').val('');
+                            $('#add-modal').modal('toggle');
+                            dataTable.ajax.reload();
+                        });
+                      } 
+                      else if (response.status == 'successes'){
+                        Swal.fire(
+                          'Succeed!',
+                          'Room has been added successfully.',
+                          'success').then(function(){
+                          $('#add-modal').modal('toggle');
+                          dataTable.ajax.reload();
+                        });
+                      }
+                    }
+                  });
+                  }
+                form.classList.add('was-validated')
+                
+              }, false)
+            })
+        },
+
         // ฟังก์ชั่น กดปุ่ม Edit
         onClickEditBtn : function (){
             $('#table-room-id').on('click', '[name="edit-room"]', function () {  // ปุ่ม 'แก้ไข' ของข้อมูลข้อมูลห้อง
@@ -309,7 +463,8 @@
             $('#input-editmacaddress').val(data.mac_address);  
           });
         },
-        // ฟังก์ชั่น กดปุ่ม Edit
+
+
         // ฟังก์ชั่น เมื่อ กดปุ่ม Submit Edit
         onSubmitEditRoom : function(){
           'use strict'
@@ -324,7 +479,6 @@
                   event.stopPropagation();
                 } else {
                   event.preventDefault();
-                  
                   let dateNow = Feature.getDateNow();
                   let room_name = $('#input-editroomname').val();              
                   let room_number = $('#input-editroomnumber').val();    
@@ -343,16 +497,24 @@
                     success: function(response)
                     {
                       if(response.status == 'error self remove'){
-                        Swal.fire('อัพเดตข้อมูลได้')
+                        Swal.fire(
+                        'error',
+                        'Sorry...',
+                        'You cannot edit this room!'
+                      )
                       } 
                       else if (response.status == 'successes'){
-                        Swal.fire('อัพเดตข้อมูลสำเร็จ').then(function(){
-                          $('#edit-modal').modal('toggle');
-                          dataTable.ajax.reload();
-                        });
-                        }
+                        Swal.fire(
+                        'Succeed!',
+                        'Room Edit Succeeded.',
+                        'success'
+                      ).then(function(){
+                        $('#edit-modal').modal('toggle');
+                        dataTable.ajax.reload();
+                      });                        
                       }
-                    });
+                    }
+                  });
                 }      
                 form.classList.add('was-validated')
                 
@@ -362,7 +524,7 @@
 
         // ฟังก์ชั่น กดปุ่ม Remove Room
         onClickRemoveBtn : function () {
-          $('#table-room-id').on('click', '[name="delete_room"]', function () {    // ปุ่ม 'ลบ' ของข้อมูลบุคลากรในแถวตารางข้อมูล
+          $('#table-room-id').on('click', '[name="delete_room"]', function () {    // ปุ่ม 'ลบ' ของข้อมูลห้องในแถวตารางข้อมูล
             var data = $(this).data();
             glo_room_id = data.id; 
             Swal.fire({
@@ -417,6 +579,7 @@
       Feature.onClickEditBtn();
       Feature.onSubmitEditRoom();
       Feature.onClickRemoveBtn();
+      Feature.onSubmitAddRoom();
   });
 
 </script>

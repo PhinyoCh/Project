@@ -35,28 +35,22 @@ module.exports = {
         return {rows,field};
     },
 
-    addRoom: function (data, callback){
-        var user_id = data.user_id;
-        var room_name = data.room_name;
-        var room_number = data.room_number;
-        var floor = data.floor;
-        var active = data.active;
-        var mac_address = data.mac_address;
-        var date = data.date;
+    addRoom: function (data, update_by, callback){
 
-        return db.query(
-            "INSERT INTO room (room_name,room_number,mac_address,floor,active,create_by,create_date,update_by,update_date) "+
-            "VALUES (?,?,?,?,?,?,?,?,?) ",
+        return db.promise().query(
+            "INSERT INTO `room`(`room_name`, `room_number`, `mac_address`, `floor`, `status`, `active`, `create_by`, `create_date`, `update_by`, `update_date`) "+
+            "VALUES (?,?,?,?,?,?,?,?,?,?) ",
             [
-                room_name,
-                room_number,
-                mac_address,
-                floor,
-                active,
-                user_id,
-                date,
-                user_id,
-                date
+                data.room_name,
+                data.room_number,
+                data.mac_address,
+                data.floor,
+                data.status,
+                data.active,
+                update_by,
+                data.update_date,
+                update_by,
+                data.create_date
             ],
             callback
         );
