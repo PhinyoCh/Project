@@ -15,20 +15,20 @@ module.exports = {
             // Check mime
             const mimetype = filetypes.test(file.mimetype);
             if(mimetype){
-                return cb(null,true);
+                cb(null,true);
             } else {
                 cb('Error: Audio Only!');
             }
         }}).single("files");
 
-        UploadFile(req, res, next, async function (err) {
+        UploadFile(req, res, async function (err) {
             if (err instanceof multer.MulterError) {
-              return res.status(500).json(err);
+              return res.json(err);
             } 
-            if (err) {
-              return res.status(500).json(err);
-            }
-            if(req.file != undefined){
+            else if (err) {
+              return res.json(err);
+            } 
+            else {
                 next();
             }
         })
