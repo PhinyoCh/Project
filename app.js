@@ -5,6 +5,7 @@ const logger = require("morgan")
 const config = require('./config/server.config');
 const path = require('path');
 const cookieParser = require('cookie-parser');
+const socketController = require('./controllers/socket.controller');
 //import { useState, useEffect } from 'react';
 
 //listening port
@@ -40,6 +41,7 @@ var RequestRoutes = require("./routes/request.route");
 var UserManageRoutes = require("./routes/user_manage.route");
 var UploadFileRoutes = require("./routes/sound_manage.route");
 var ReportRoutes = require("./routes/report.route");
+var socketRoute = require("./routes/socket.route");
 var testPlaySoundRoutes = require("./routes/test_play_sound.route");
 
 
@@ -52,10 +54,18 @@ app.use("/upload",UploadFileRoutes);
 app.use("/request",RequestRoutes);
 app.use("/report",ReportRoutes);
 app.use("/profile",ProfileRoutes);
+app.use("/socket",socketRoute);
 app.use("/testplaysound",testPlaySoundRoutes);
 
 //Socket
 const io = require("socket.io")(server, { cors: { origin: "*" } });
+
+// next line is the money
+
+io.on("connection", (socket) => {
+  app.set('socketio', io);
+  // app.use(socketController.isConnection)
+});
 
 io.on("connection", (client) => {
   client.on("data", function(resp,){

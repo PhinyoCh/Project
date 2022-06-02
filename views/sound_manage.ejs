@@ -58,7 +58,7 @@
                     </div>                    
                   </div>
                   <label for="formFile" class="form-label">Please upload the audio file</label>
-                  <input type="file" class="form-control" id="fileupload" required>
+                  <input type="file" class="form-control" id="fileupload" name="fileupload"  required>
                   <div class="invalid-feedback">
                     Please Upload Sound File.
                   </div>  
@@ -289,9 +289,9 @@
                     const str = dateLocal.toISOString().slice(0, 19).replace(/-/g, "/").replace("T", " ");      //
                     var dateNow = str; //user dateNow
                     const recordtype = 1;
-                    const roomname = $('#input-filename');
-                    const detail = $('#input-filedetail')
-                    const files = document.getElementById("fileupload");
+                    const roomname = $('#input-filename').val();
+                    const detail = $('#input-filedetail').val();
+                    const files = $("#fileupload")[0].files[0];
                     const formData = new FormData();
                     formData.append('record_type',recordtype);
                     formData.append('record_name',roomname);
@@ -299,30 +299,30 @@
                     formData.append('update_date',dateNow);
                     formData.append('files',files);
 
-                    $.ajax({ 
+                    // console.log(files)
+                    $.ajax({
                       url: '/upload/PostUpload',
                       data: formData,
                       processData: false,
                       contentType: false,
-                      type:'Post',
+                      type:'post',
                       success: function(response)
                       {
-                        // if(response.status == 'error self remove'){
-                        //   Swal.fire({
-                        //     icon: 'error',
-                        //     title: 'Sorry...',
-                        //     text: 'You cannot delete this user!'
-                        //   })
-                        // } 
-                        // else if (response.status == 'successes'){
-                        //   Swal.fire(
-                        //     'Succeed!',
-                        //     'User Deletion Succeeded.',
-                        //     'success'
-                        //   ).then(function(){
-                        //     dataTable.ajax.reload();
-                        //   });                          
-                        // }
+                        if (response.status == 'successes'){
+                          Swal.fire(
+                            'Succeed!',
+                            'User Deletion Succeeded.',
+                            'success'
+                          ).then(function(){
+                            dataTable.ajax.reload();
+                          });                          
+                        } else {
+                          Swal.fire({
+                            icon: 'error',
+                            title: 'Sorry...',
+                            text: 'You cannot delete this user!'
+                          })
+                        }
                       }
                     });
                   }
