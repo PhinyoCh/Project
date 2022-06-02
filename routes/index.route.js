@@ -8,6 +8,8 @@ router.get('/', validation.isAuth, RenderController.renderIndex);
 
 router.post("/search",RoomcController.searchRoom);
 
+router.post("/PostAddRoom", validation.isAdminRoute, RoomcController.addRoom);
+
 router.post("/PostEditRoom", validation.isAdminRoute, RoomcController.editRoom);
 
 router.post("/PostRemoveRoom", validation.isAdminRoute, RoomcController.removeRoom);

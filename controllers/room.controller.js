@@ -33,15 +33,10 @@ module.exports = {
     },
 
     addRoom :  async function (req, res, next){
-        var user_id = req.body.user_id;
-        var room_name = req.body.room_name;
-        var room_number = req.body.room_number;
-        var floor = req.body.floor;
-        var active = req.body.active;
-        var mac_address = req.body.mac_address;
-        var date = req.body.date;  
-        
-        // res.send(user_id + " "+ room_name + " "+ room_number  +" "+ floor +" "+ active +" "+ mac_address +" "+ date);
+        let update_by =  JSON.parse(decrypt(req.cookies.usd))[0].user_id;
+        await room.addRoom(req.body,update_by).then(function(){
+            return res.json({status:'successes'});
+        })
     }
 }
 
