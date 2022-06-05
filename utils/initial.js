@@ -5,6 +5,10 @@ module.exports = {
         const {cookies} = req;
         return JSON.parse(encrypt_decrypt_tools.decrypt(cookies.usd));
     },
+    getUserID : function(req){
+        const {cookies} = req;
+        return JSON.parse(encrypt_decrypt_tools.decrypt(cookies.usd))[0].user_id;
+    },
     getUsername : function(req){
         const {cookies} = req;
         return JSON.parse(encrypt_decrypt_tools.decrypt(cookies.usd))[0].username;

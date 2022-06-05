@@ -80,7 +80,7 @@
               <h5 class="modal-title" id="exampleModalLabel">Edit Audio File</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form class="needs-validation" novalidate>
+            <form id="edit-form" class="needs-validation" novalidate>
               <div class="modal-body">
                 <div class="form">
                   <div class="row">                    
@@ -131,6 +131,7 @@
 
 <script>
   var Feature = (function(){
+    let glo_record_id;
       var dataTable = $('#table-sound-id').DataTable({
         language : {emptyTable: "ไม่พบข้อมูล"},
         searching: false,
@@ -172,8 +173,9 @@
           },          
           { 
             data: function (data) {
-              return '<button type="submit" name="edit" class="btn btn-primary"><i class="fa fa-edit"></i>Edit</button>\
-              <button type="submit" name="delete_data" class="btn btn-danger"><i class="fa fa-trash"></i>Delete</button>';                  // ข้อมูล ' ลำดับ '
+              return '<button type="submit" name="edit_data" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#edit-modal"\
+              data-record_id="' + data['record_id'] + '" data-record_name="' + data['record_name'] + '" data-record_detail="' + data['record_detail'] + '"><i class="fa fa-edit"></i>Edit</button>\
+              <button type="submit" name="delete_data" data-record_id="' + data['record_id'] + '" class="btn btn-danger"><i class="fa fa-trash"></i>Delete</button>';                  // ข้อมูล ' ลำดับ '
             },
             className : 'text-center',              // จัดให้ข้อมูลอยู่ตรงกลาง
           }
@@ -209,63 +211,123 @@
             //getData
             $('#table-sound-id').on('click', '[name="edit_data"]', function () {  // ปุ่ม 'แก้ไข' ของข้อมูลบุคลากรในแถวตารางข้อมูล
               var data = $(this).data();  // รับข้อมูลจากปุ่มแก้ไข ที่กดในแถวตารางข้อมูล
+              glo_record_id = data.record_id; 
               // set value
-              id_update = data.id;                            // เก็บข้อมูล id ของข้อมูลบุคลากร
-              $('#input-editfirstname').val(data.s_name);               // นำข้อมูล response ของรหัส RFID มาใส่ในฟอร์ม 'รหัส RFID' ข้อมูลบุคลากร
-              $('#input-editlastname').val(data.l_name);     // นำข้อมูล response ของชื่อ มาใส่ในฟอร์ม 'ชื่อ' ข้อมูลบุคลากร
-              $('#input-editusername').val( data.username);      // นำข้อมูล response ของนามสกุล มาใส่ในฟอร์ม 'นามสกุล' ข้อมูลบุคลากร
-              $('#input-editemail').val(data.email);       // นำข้อมูล response ของรหัสพนักงานมาใส่ในฟอร์ม 'รหัสพนักงาน' ข้อมูลบุคลากร
-              $("#input-editrole").val(data.user_role);                  // นำข้อมูล response ของรหัสผ่าน มาใส่ในฟอร์ม 'รหัสผ่าน' ข้อมูลบุคลากร
+              rec = data.id;                           
+              
             });
-            
+          },
+
+          getDateNow: function(){
+            /* Update Date*/
+            const now = new Date();                                                                     //
+            const offsetMs = now.getTimezoneOffset() * 60 * 1000;                                       //
+            const dateLocal = new Date(now.getTime() - offsetMs);                                       //  >> รับค่าวันที่และเวลา ปัจจุบัน
+            const str = dateLocal.toISOString().slice(0, 19).replace(/-/g, "/").replace("T", " ");      //
+                dateNow = str; 
+              /**************/
+            return dateNow;
+          },
+
+          onClickRemoveBtn : function () {
             //delete
-            $('#table-sound-id').on('click', '[name="delete_data"]', function () {    // ปุ่ม 'ลบ' ของข้อมูลบุคลากรในแถวตารางข้อมูล
+            $('#table-sound-id').on('click', '[name="delete_data"]', function () {    // ปุ่ม 'ลบ' ของข้อมูลเสียง
               var data = $(this).data();
-              var user_id = data.id; 
+              var record_id = data.record_id; 
               Swal.fire({
                 title: 'Are you sure?',
-                text: "Do you want to delete this User ?",
+                text: "Do you want to delete this Sound ?",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
                 confirmButtonText: 'Yes, delete it!'
               }).then((result) => {
-                const now = new Date();                                                                     //
-                const offsetMs = now.getTimezoneOffset() * 60 * 1000;                                       //
-                const dateLocal = new Date(now.getTime() - offsetMs);                                       //  >> รับค่าวันที่และเวลา ปัจจุบัน
-                const str = dateLocal.toISOString().slice(0, 19).replace(/-/g, "/").replace("T", " ");      //
-                    dateNow = str; //user dateNow
+                if(result.isConfirmed){
+                  $.ajax({ 
+                    url: '/upload/PostRemoveSound',
+                    data: {
+                      "record_id": record_id,
+                      "update_date":Feature.getDateNow(),
+                    },
+                    type: 'post',
+                    success: function(response)
+                    {
+                      if(response.status == 'error self remove'){
+                        Swal.fire({
+                          icon: 'error',
+                          title: 'Sorry...',
+                          text: 'You cannot delete this sound!'
+                        })
+                      } 
+                      else if (response.status == 'successes'){
+                        Swal.fire(
+                          'Succeed!',
+                          'Sound Deletion Succeeded.',
+                          'success'
+                        ).then(function(){
+                          dataTable.ajax.reload();
+                        });                          
+                      }
+                    }
+                  });
+                }         
+              })                  
+            });
+          },
 
-                $.ajax({ 
-                      url: '/upload/PostRemoveSound',
+          onSubmitEditSound : function(){
+            'use strict'
+            
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            var forms = document.querySelectorAll('#edit-form.needs-validation')     
+            // Loop over them and prevent submission
+            Array.prototype.slice.call(forms)
+              .forEach(function (form) {
+                form.addEventListener('submit', function (event) {
+                  if (!form.checkValidity()) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                  } else {
+                    event.preventDefault();
+                    
+                    let dateNow = Feature.getDateNow();
+                    let record_name = $('#input-updatefilename').val();             
+                    let record_detail = $('#input-updatedetail').val();
+                    $.ajax({ 
+                      url: '/upload/PostEditSound',
                       data: {
-                        /*"user_id": user_id,
-                        "update_date":dateNow,*/
+                        "record_id":glo_record_id,
+                        "record_name":record_name,
+                        "record_detail":record_detail,
+                        "update_date":dateNow,
                       },
                       type: 'post',
                       success: function(response)
-                      {
-                        if(response.status == 'error self remove'){
+                      {                        
+                        if(response.status == 'Failed'){
                           Swal.fire({
                             icon: 'error',
                             title: 'Sorry...',
-                            text: 'You cannot delete this user!'
+                            text: "Can't edit this sound."
                           })
                         } 
                         else if (response.status == 'successes'){
                           Swal.fire(
                             'Succeed!',
-                            'Sound Deletion Succeeded.',
-                            'success'
-                          ).then(function(){
+                            'Sound has been edit successfully.',
+                            'success').then(function(){
+                            $('#edit-modal').modal('toggle');
                             dataTable.ajax.reload();
-                          });                          
+                          });
+                          }
                         }
-                      }
-                });              
-              })                  
-            });
+                      });
+                  }      
+                  form.classList.add('was-validated')
+                  
+                }, false)
+              })
           },
           onSubmitAddSound:  function(){
             'use strict'
@@ -311,7 +373,7 @@
                         if (response.status == 'successes'){
                           Swal.fire(
                             'Succeed!',
-                            'User Deletion Succeeded.',
+                            'The sound has been added Succeeded.',
                             'success'
                           ).then(function(){
                             dataTable.ajax.reload();
@@ -320,7 +382,7 @@
                           Swal.fire({
                             icon: 'error',
                             title: 'Sorry...',
-                            text: 'You cannot delete this user!'
+                            text: "Can't add this sound."
                           })
                         }
                       }
@@ -334,8 +396,10 @@
   })();
 
   jQuery(document).ready(function(){
+      Feature.onClickRemoveBtn();
       Feature.onSubmitAddSound();
       Feature.initialButton();
+      Feature.onSubmitEditSound();
   });
 
   

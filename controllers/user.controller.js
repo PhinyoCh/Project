@@ -33,6 +33,21 @@ module.exports = {
         })
         
     },
+
+    resetPasswordUser :async function(req, res){
+        var update_by =  JSON.parse(decrypt(req.cookies.usd))[0].user_id;
+        var password = req.body.password;
+        /*console.log(password);
+        if (password.length > 7){
+            return res.json({status:"Failed"})
+        }*/
+        let hash_password = await bcrypt.hash(password,10)
+        console.log(hash_password);
+        await user.resetPassword(req.body,hash_password,update_by).then(
+            ()=>{ return res.json({status:"Successes",data:"Resetpassword is Successful"})}
+        );
+    },
+
     removeUser : async function(req,res){
         var update_by =  JSON.parse(decrypt(req.cookies.usd))[0].user_id;
         var user_id = req.body.user_id;

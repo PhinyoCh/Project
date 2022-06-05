@@ -16,8 +16,30 @@ module.exports = {
             res.json({search:search});
         }
     },
+
+    editFile : async function (req, res){ 
+        var update_by =  JSON.parse(decrypt(req.cookies.usd))[0].user_id;
+        var record_id = req.body.record_id;
+        var record_name = req.body.record_name;
+        var record_detail = req.body.record_detail;
+        var update_date = req.body.update_date;
+
+        await record.editSound(req.body,update_by).then(function(){
+            return res.json({status:'successes','update_by':update_by,'record_name':record_name,'record_detail':record_detail,'record_id':record_id,'update_date':update_date});
+            
+        });
+        
+    },
+
     removeFile : async function (req, res){ 
-        console.log("remove")
+        var update_by =  JSON.parse(decrypt(req.cookies.usd))[0].user_id;
+        var record_id = req.body.record_id;
+        var update_date = req.body.update_date;
+       
+        await record.deleteSound(req.body,update_by).then(function(){
+            return res.json({status:'successes','update_by':update_by,'record_id':record_id,'update_date':update_date});
+            
+        });
         
     },
     uploadFile : async function (req, res){ 
@@ -34,6 +56,11 @@ module.exports = {
             })
         })
     },
+
+    getreSentFile : async function(req,res){
+
+    },
+
     getAudioFile : async function(req,res){
         if(!req.query.filename){
             return res.send('idle time');

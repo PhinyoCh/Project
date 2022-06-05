@@ -1,4 +1,4 @@
-const {getUserData, getUsername, getUserRole, getName, getEmail } = require('../utils/initial');
+const {getUserData, getUsername, getUserRole, getName, getEmail, getUserID } = require('../utils/initial');
 
 module.exports = {
     renderLogin : function (req, res, next){
@@ -8,7 +8,7 @@ module.exports = {
         res.render('index', {username : getUsername(req), role : getUserRole(req)});
     },
     renderProfile : function (req, res, next){
-        res.render('profile', {username : getUsername(req), role : getUserRole(req), name : getName(req), email : getEmail(req)});
+        res.render('profile', {userID : getUserID(req), username : getUsername(req), role : getUserRole(req), name : getName(req), email : getEmail(req)});
     },
     renderReport : function (req, res, next){
         res.render('report', {username : getUsername(req), role : getUserRole(req)});
