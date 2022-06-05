@@ -14,4 +14,8 @@ router.post("/PostEditRoom", validation.isAdminRoute, RoomcController.editRoom);
 
 router.post("/PostRemoveRoom", validation.isAdminRoute, RoomcController.removeRoom);
 
+router.post("/PostSetActiveNode", RoomcController.setActive);
+
+router.post("/PostSetinActiveNode", RoomcController.setinActive);
+
 module.exports = router;

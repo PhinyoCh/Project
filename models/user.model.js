@@ -70,6 +70,19 @@ module.exports = {
             ]
         )
         return {rows,field};
+    },
+
+    resetPassword: async function (data,hash_password, update_by, callback){
+        var [rows,field] = await db.promise().query(
+            "UPDATE `user` SET `password` = ?, `update_by` = ?, `update_date` = ? WHERE `active` = '1' AND user_id = ?",
+            [                
+                hash_password,
+                update_by,
+                data.update_date,
+                data.user_id
+            ]
+        )
+        return {rows,field};
     }
 
 }

@@ -12,9 +12,12 @@ router.post("/PostUpload", validation.isAuth,uploadMiddleware.validateUploadFile
 
 router.post("/PostRemoveSound", validation.isAuth, RecordController.removeFile);
 
-router.post("/searchRecord",RecordController.searchRecord);
+router.post("/PostEditSound", validation.isAuth, RecordController.editFile);
 
-router.get("/playAudio",soundController.getAudioFile)
+router.post("/searchRecord", RecordController.searchRecord);
 
+router.get("/playAudio", soundController.getAudioFile)
+
+router.get("/reSentAudio", soundController.getreSentFile)
 
 module.exports = router;

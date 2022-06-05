@@ -35,6 +35,26 @@ module.exports = {
         return {rows,field};
     },
 
+    setActiveRoom:async function (data,update_by){
+        var [rows,field] = await db.promise().query(
+            "UPDATE `room` SET `status` = 1 WHERE `active` = '1' AND mac_address = ?",
+            [
+                data.mac_address                
+            ]
+        )
+        return {rows,field};
+    },
+
+    setinActiveRoom:async function (data,update_by){
+        var [rows,field] = await db.promise().query(
+            "UPDATE `room` SET `status` = 0 WHERE `active` = '1' AND mac_address = ?",
+            [
+                data.mac_address                
+            ]
+        )
+        return {rows,field};
+    },
+
     addRoom: function (data, update_by, callback){
 
         return db.promise().query(

@@ -32,6 +32,18 @@ module.exports = {
         })
     },
 
+    setActive : async function (req, res, next){
+        await room.setActiveRoom(req.body,update_by).then(function(){
+            return res.json({status:'successes'});
+        })
+    },
+
+    setinActive : async function (req, res, next){
+        await room.setinActiveRoom(req.body,update_by).then(function(){
+            return res.json({status:'successes'});
+        })
+    },
+
     addRoom :  async function (req, res, next){
         let update_by =  JSON.parse(decrypt(req.cookies.usd))[0].user_id;
         await room.addRoom(req.body,update_by).then(function(){
