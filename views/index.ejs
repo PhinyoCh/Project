@@ -46,7 +46,7 @@
               <h5 class="modal-title" id="exampleModalLabel">Add Room</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form id="add-form" class="needs-validation" novalidate>
+            <form id="addroom-form" class="needs-validation" novalidate>
               <div class="modal-body">
                 <div class="form">
                   <div class="row">
@@ -168,60 +168,37 @@
               <h5 class="modal-title" id="exampleModalLabel">Mode Select File</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form id="add-form" class="needs-validation" novalidate>
+            <form id="mode-form" class="needs-validation" novalidate>
               <div class="modal-body">
                 <div class="form">
                   <div class="row">
-                    <div class="row">
-                      <div class="col-md-6">
-                        <label for="firstname" class="form-label">First Name</label>
-                        <input type="text" class="form-control" id="input-addfirstname" required>
-                        <div class="invalid-feedback">
-                          Please Enter First Name.
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <label for="lastname" class="form-label">Last Name</label>
-                        <input type="text" class="form-control" id="input-addlastname" required>
-                        <div class="invalid-feedback">
-                          Please Enter Last Name.
-                        </div>
-                      </div>                      
-                    </div>
-
-                    <div class="col-md-12 mb-1">
-                      <label for="user-name" class="form-label" >Username</label>
-                      <input type="text" class="form-control" id="input-addusername" required >
+                    <div class="col-md-6 mb-3">
+                      <label for="file-name" class="form-label"> File Name </label>
+                      <select class="form-select" style="margin-top: 7px;margin-bottom: 7px;padding-top: 9px;padding-bottom: 9px;" id="file-name" required>
+                        <option selected disabled value="">Select Filename...</option>
+                      </select>
                       <div class="invalid-feedback">
-                        Please Enter User Name.
+                        Please Select a Filename.
                       </div>
                     </div>
                     <div class="col-md-12 mb-1">
-                      <label for="password" class="form-label">Password</label>
-                      <input type="password" class="form-control" id="input-addpassword" required >
+                      <label for="select-room" class="form-label">Select Room</label>
+                      <select data-placeholder="Begin typing a name to filter..." multiple class="chosen-select" name="test">
+                        <option value=""></option>
+                        <option>American Black Bear</option>
+                        <option>Asiatic Black Bear</option>
+                        <option>Brown Bear</option>
+                        <option>Giant Panda</option>
+                        <option>Sloth Bear</option>
+                        <option>Sun Bear</option>
+                        <option>Polar Bear</option>
+                        <option>Spectacled Bear</option>
+                      </select>
                       <div class="invalid-feedback">
                         Please Enter Password.
                       </div>
                     </div>                    
-                  </div>
-                  <div class="col-md-12">
-                    <label for="emil" class="form-label">Email</label>
-                    <input type="email" class="form-control" id="input-addemail" required >
-                    <div class="invalid-feedback">
-                      Please Enter Email.
-                    </div>
-                  </div>
-                  <div class="col-md-6 mb-3">
-                    <label for="user-role" class="form-label"> User Role </label>
-                    <select class="form-select" style="margin-top: 7px;margin-bottom: 7px;padding-top: 9px;padding-bottom: 9px;" id="input-addrole" required>
-                      <option selected disabled value="">Select Role...</option>
-                      <option value="1">STAFF</option>
-                      <option value="2">ADMIN</option>
-                    </select>
-                    <div class="invalid-feedback">
-                      Please select a role.
-                    </div>
-                  </div>
+                  </div>              
                 </div>                                   
               </div>
               <div class="modal-footer">
@@ -261,8 +238,12 @@
 <link rel="stylesheet" href="/node_modules/@sweetalert2/themes/dark/dark.css">
 <script src="/node_modules/sweetalert2//dist/sweetalert2.min.js"></script>
 
+<script src="https://cdn.rawgit.com/harvesthq/chosen/gh-pages/chosen.jquery.min.js"></script>
+<link href="https://cdn.rawgit.com/harvesthq/chosen/gh-pages/chosen.min.css" rel="stylesheet"/>
+
 <script>
 
+  
   function onClickMode(){
     let mode = $("#dropdown-mode").val();
     if (mode == 1){
@@ -377,6 +358,71 @@
       })
       return {
 
+        initialButton : function(){
+          $.ajax({ 
+            url: '/upload/searchRecord',
+            type: 'POST',
+            dataType: 'JSON',
+            success: function(res){
+              $.each(res, function(index, data){
+                $('#file-name').append('<option value="'+data['sound_address']+'">'+data['record_name']+'</option>')
+              })
+            }
+           })
+        },
+
+        onClickSentFile: function(){
+          'use strict'
+          // Fetch all the forms we want to apply custom Bootstrap validation styles to
+          var forms = document.querySelectorAll('#mode-form.needs-validation')     
+          // Loop over them and prevent submission
+          Array.prototype.slice.call(forms)
+            .forEach(function (form) {
+              form.addEventListener('submit', function (event) {
+                if (!form.checkValidity()) {
+                  event.preventDefault();
+                  event.stopPropagation();
+                } else {
+                  event.preventDefault();
+                  let dateNow = Feature.getDateNow();
+                  //let room_name = $('#input-editroomname').val();              
+                  let filename = $('#file-name').val();          
+                  
+                  $.ajax({ 
+                    url: '/socket',
+                    data: {
+                      "filename":filename,
+                    },
+                    type: 'POST',
+                    success: function(response)
+                    {
+                      /*
+                      if(response.status == 'error self remove'){
+                        Swal.fire(
+                        'error',
+                        'Sorry...',
+                        'You cannot edit this room!'
+                      )
+                      } 
+                      else if (response.status == 'successes'){
+                        Swal.fire(
+                        'Succeed!',
+                        'Room Edit Succeeded.',
+                        'success'
+                      ).then(function(){
+                        $('#edit-modal').modal('toggle');
+                        dataTable.ajax.reload();
+                      });                        
+                      }*/
+                    }
+                  });
+                }      
+                form.classList.add('was-validated')
+                
+              }, false)
+            })
+        }, 
+
         getDateNow: function(){
           /* Update Date*/
           const now = new Date();                                                                     //
@@ -392,7 +438,7 @@
         onSubmitAddRoom:  function(){
           'use strict'
           // Fetch all the forms we want to apply custom Bootstrap validation styles to
-          var forms = document.querySelectorAll('#add-form.needs-validation')     
+          var forms = document.querySelectorAll('#addroom-form.needs-validation')     
           // Loop over them and prevent submission
           Array.prototype.slice.call(forms)
             .forEach(function (form) {
@@ -606,6 +652,8 @@
       Feature.onClickRemoveBtn();
       Feature.onSubmitAddRoom();
       Feature.selectionRoom();
+      Feature.initialButton();
+      Feature.onClickSentFile();
   });
 
 </script>
