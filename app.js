@@ -68,7 +68,7 @@ io.on("connection", (socket) => {
 });
 
 io.on("connection", (client) => {
-  client.on("data", function(resp,){
+  client.on("data", function(resp){
     let IP = JSON.stringify(resp.ip_address)
     console.log(IP);
   });
