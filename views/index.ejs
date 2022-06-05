@@ -10,7 +10,7 @@
 
               <div class="card-body">
                 <div class="table-responsive">
-                  <table id="table-room-id" class="table" style="width: 100%">
+                  <table id="table-room-id" class="table display" style="width: 100%">
                     <thead>                     
                       <tr>
                         <th class="text-center">NUMBER</th>
@@ -334,8 +334,10 @@
           { 
             data: function (data) {
               return '<div class="form-switch" id="swform">\
-                     <input class="form-check-input" type="checkbox" value="1" id="switch-box">\
-                     </div>';               
+                     <input class="form-check-input" name="switch" type="checkbox" value="'+data['room_id'] +'" id="switch-'+data['room_id'] +'">\
+                     <span class="switch-label" data-on="Yes" data-off="No"></span>\
+                     <span class="switch-handle"></span>\
+                    </div>';               
             },
             className : 'text-center align-middle',              // จัดให้ข้อมูลอยู่ตรงกลาง
           },
@@ -400,9 +402,11 @@
                   event.stopPropagation();
                 }else{
                   event.preventDefault();
+                  // ประกาศตัวแปรเวลาปัจจุบัน
                   let dateNow = Feature.getDateNow();
-                  let room_name = $('#input-addroomname').val();               // นำข้อมูล response ของรหัส RFID มาใส่ในฟอร์ม 'รหัส RFID' ข้อมูลบุคลากร
-                  let room_number = $('#input-addroomnumber').val();     // นำข้อมูล response ของชื่อ มาใส่ในฟอร์ม 'ชื่อ' ข้อมูลบุคลากร
+                  // รับค่าจากฟอร์ม
+                  let room_name = $('#input-addroomname').val();         
+                  let room_number = $('#input-addroomnumber').val();   
                   let floor = $('#input-addfloor').val();
                   let mac_address = $('#input-addmacaddress').val();  
                   $.ajax({ 
@@ -425,8 +429,8 @@
                           icon: 'error',
                           title: 'Sorry...',
                           text: "Can't add this room."}).then(function(){
-                            let room_name = $('#input-addroomname').val('');               // นำข้อมูล response ของรหัส RFID มาใส่ในฟอร์ม 'รหัส RFID' ข้อมูลบุคลากร
-                            let room_number = $('#input-addroomnumber').val('');     // นำข้อมูล response ของชื่อ มาใส่ในฟอร์ม 'ชื่อ' ข้อมูลบุคลากร
+                            let room_name = $('#input-addroomname').val('');              
+                            let room_number = $('#input-addroomnumber').val('');     
                             let floor = $('#input-addfloor').val('');
                             let mac_address = $('#input-addmacaddress').val('');
                             $('#add-modal').modal('toggle');
@@ -522,6 +526,27 @@
             })
         }, 
 
+        // ปุ่มเลือกห้อง
+        selectionRoom : function(){
+        
+          $('.form-check-input').on('change', function() {
+            var isChecked = $(this).is(':checked');
+            var selectedData;
+            var $switchLabel = $('.switch-label');
+            console.log('isChecked: ' + isChecked); 
+            
+            if(isChecked) {
+              selectedData = $switchLabel.attr('data-on');
+            } else {
+              selectedData = $switchLabel.attr('data-off');
+            }
+            
+            console.log('Selected data: ' + selectedData);
+            
+          });
+
+        },
+        
         // ฟังก์ชั่น กดปุ่ม Remove Room
         onClickRemoveBtn : function () {
           $('#table-room-id').on('click', '[name="delete_room"]', function () {    // ปุ่ม 'ลบ' ของข้อมูลห้องในแถวตารางข้อมูล
@@ -580,6 +605,7 @@
       Feature.onSubmitEditRoom();
       Feature.onClickRemoveBtn();
       Feature.onSubmitAddRoom();
+      Feature.selectionRoom();
   });
 
 </script>

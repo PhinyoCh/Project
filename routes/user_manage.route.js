@@ -6,12 +6,14 @@ const RenderController = require('../controllers/render.controller')
 
 router.get('/', validation.isAuth, validation.isAdminRoute, RenderController.renderUserManage);
 
+router.post("/searchUser", validation.isAdminRoute, UserController.searchUser);
+
 router.post("/AddUserAccount",  UserController.regisUser);
 
 router.post("/PostRemoveUser", validation.isAdminRoute, UserController.removeUser);
 
 router.post("/PostEditUser", validation.isAdminRoute, UserController.editUser);
 
-router.post("/searchUser", validation.isAdminRoute, UserController.searchUser);
+router.post("/ResetPasswordUser", validation.isAuth, UserController.resetPasswordUser);
 
 module.exports = router;
