@@ -15,8 +15,8 @@ module.exports = {
     },
     broadcastToRaspi : function (req,res,next){
         const socket_io = req.app.get("socketio");
-        if(req.query.filename){
-            socket_io.emit('play', req.query.filename);
+        if(req.body.filename){
+            socket_io.emit('play', req.body.filename);
             return;
         }
         socket_io.emit('message', 'Hi from Server');
