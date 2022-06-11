@@ -1,5 +1,6 @@
 const bcrypt = require("bcrypt");
 const user = require("../models/user.model");
+const log = require("../models/log.model");
 const {encrypt, decrypt} = require("../utils/encrypt_decrypt_tools");
 
 module.exports = {
@@ -14,8 +15,10 @@ module.exports = {
         }
         let hash_password = await bcrypt.hash(password,10)
         await user.addUser(req.body,hash_password).then(
-            ()=>{ return res.json({status:"Successes",data:"Registration is Successful"})}
-        );
+            ()=>{ 
+                    return res.json({status:"Successes",data:"Registration is Successful"});
+             }
+        ); 
     },
     searchUser : async function (req, res, next){
         let search = req.query.search;
@@ -29,7 +32,7 @@ module.exports = {
     editUser : async function(req,res){
         let update_by =  JSON.parse(decrypt(req.cookies.usd))[0].user_id;
         await user.editUser(req.body,update_by).then(function(){
-            return res.json({status:'successes'});
+            return res.json({status:'Successes'});
         })
         
     },
@@ -56,7 +59,7 @@ module.exports = {
            return res.json({status:'error self remove'});
         }
         await user.deleteUser(req.body,update_by).then(function(){
-            return res.json({status:'successes','update_by':update_by,'user_id':user_id,'update_date':update_date});
+            return res.json({status:'Successes','update_by':update_by,'user_id':user_id,'update_date':update_date});
             
         });
         

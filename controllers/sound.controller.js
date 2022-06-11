@@ -46,7 +46,7 @@ module.exports = {
         var update_by =  JSON.parse(decrypt(req.cookies.usd))[0].user_id;
         const filename = update_by +'_'+ Math.floor(+new Date() / 1000) +'.mp3';
         const tmpdir = req.file.destination + "/" + req.file.filename;
-        const storage = './assets/storage/'+ filename;
+        const storage = './uploads/storage/'+ filename;
         await record.insertFile(req.body,filename,update_by).then(function(rows){
             fs.rename( tmpdir, storage, function(err){
                 if(err){
@@ -66,7 +66,7 @@ module.exports = {
             return res.send('idle time');
         }
         var filename = req.query.filename;
-        const filePath = './assets/storage/' + filename;
+        const filePath = './uploads/storage/' + filename;
         var stat = fs.statSync(filePath);
         var total = stat.size;
         if (req.headers.range) {
@@ -81,7 +81,8 @@ module.exports = {
             var readStream = fs.createReadStream(filePath, {start: start, end: end});
             res.writeHead(206, {
                 'Content-Range': 'bytes ' + start + '-' + end + '/' + total,
-                'Accept-Ranges': 'bytes', 'Content-Length': chunksize,
+                'Accept-Ranges': 'bytes', 
+                'Content-Length': chunksize,
                 'Content-Type': 'audio/mpeg'
             });
             readStream.pipe(res);

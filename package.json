@@ -9,6 +9,7 @@
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "crypto": "^1.0.1",
+    "css-toggle-switch": "^4.1.0",
     "datatables-select": "^1.1.0",
     "datatables.net": "^1.12.1",
     "datatables.net-dt": "^1.12.1",

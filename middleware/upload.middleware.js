@@ -5,7 +5,7 @@ module.exports = {
     validateUploadFile : function(req,res,next){
         var storage = multer.diskStorage({
             destination: (req, file, cb) => {
-                const DIR = `./assets/temp`;
+                const DIR = `./uploads/temp`;
                 cb(null, DIR);
             },
         });

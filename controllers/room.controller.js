@@ -21,34 +21,39 @@ module.exports = {
     removeRoom : async function (req, res, next){
         let update_by =  JSON.parse(decrypt(req.cookies.usd))[0].user_id;
         await room.deleteRoom(req.body,update_by).then(function(){
-            return res.json({status:'successes'});
+            return res.json({status:'Successes'});
         })
     },
 
     editRoom : async function (req, res, next){
         let update_by =  JSON.parse(decrypt(req.cookies.usd))[0].user_id;
         await room.editRoom(req.body,update_by).then(function(){
-            return res.json({status:'successes'});
+            return res.json({status:'Successes'});
         })
     },
 
-    setActive : async function (req, res, next){
-        await room.setActiveRoom(req.body,update_by).then(function(){
-            return res.json({status:'successes'});
+    setStatus : async function (status, socket_id){
+        await room.setStatusRoom(status, socket_id).then(function(){
+            return ;
         })
     },
 
-    setinActive : async function (req, res, next){
-        await room.setinActiveRoom(req.body,update_by).then(function(){
-            return res.json({status:'successes'});
-        })
-    },
+    addRoom :  async function (data){
+        var isExist = await room.getMacRoom(data.MAC_ADDRESS);
 
-    addRoom :  async function (req, res, next){
-        let update_by =  JSON.parse(decrypt(req.cookies.usd))[0].user_id;
-        await room.addRoom(req.body,update_by).then(function(){
-            return res.json({status:'successes'});
-        })
-    }
+        if(isExist.length > 0){ //isn't new node.
+            await room.setStatusRoom(1,data.MAC_ADDRESS).then(()=>{
+                data.STATUS = 'Device is Connected.';
+                // console.log({'STATUS':'Device is Connected.','DEVICE':data});
+            })
+            await room.setSocketID(data.MAC_ADDRESS, data.SOCKET_ID);
+            return;
+        } else {// is new node.
+            await room.addRoom(data).then(function(){
+                // console.log({'STATUS':'New device already added.','DEVICE':data})
+            })
+        }
+        return;
+    },
 }
 

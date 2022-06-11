@@ -1,0 +1,12 @@
+/* .switch-block {
+    height: 100px;
+  } */
+  
+  .switch-toggle input {
+      width: 0px;
+      visibility: hidden;
+  }
+  
+  h5 {
+    margin-bottom: 5px;
+  }
