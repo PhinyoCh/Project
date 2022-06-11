@@ -25,7 +25,6 @@
                         <th class="text-center">OPERACTION</th>
                       </tr>
                     </thead>
-                    
                   </table>
                 </div>
               </div>
@@ -282,7 +281,7 @@
           },
           { 
             data: function (data) {
-              return '<button type="button" data-bs-toggle="modal" data-bs-target="#repass-modal" name="repass_data" class="btn btn-outline-info "\
+              return '<button type="button" data-bs-toggle="modal" data-bs-target="#repass-modal" name="repass_data" class="btn btn-outline-warning "\
               data-id="' + data['user_id'] + '" data-username="' + data['username'] + '">ResetPassword</button>';                  
             },
             className : 'text-center',              // จัดให้ข้อมูลอยู่ตรงกลาง
@@ -384,7 +383,7 @@
                           text: 'You cannot delete this user!'
                         })
                       } 
-                      else if (response.status == 'successes'){
+                      else if (response.status == 'Successes'){
                         Swal.fire(
                           'Succeed!',
                           'User Deletion Succeeded.',
@@ -441,7 +440,7 @@
                             text: "Can't edit this user."
                           })
                         } 
-                        else if (response.status == 'successes'){
+                        else if (response.status == 'Successes'){
                           Swal.fire(
                             'Succeed!',
                             'User has been edit successfully.',
@@ -474,7 +473,7 @@
                   }else{
                     event.preventDefault();
                     let dateNow = Feature.getDateNow();
-                    let username = $('#input-addusername').val();
+                    let username = $('#reusername').val();
                     let password = $('#input-repassword').val(); 
                     let repass =  $('#input-re-password-again').val(); 
                     if (password === repass){

@@ -6,6 +6,7 @@ const config = require('./config/server.config');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const socketController = require('./controllers/socket.controller');
+const roomController = require('./controllers/room.controller');
 //import { useState, useEffect } from 'react';
 
 //listening port
@@ -63,15 +64,23 @@ const io = require("socket.io")(server, { cors: { origin: "*" } });
 // next line is the money
 
 io.on("connection", (socket) => {
-  app.set('socketio', io);
-  // app.use(socketController.isConnection)
-});
+  let sid = socket.id;
+  app.set('socket', socket);
+  socket.on("device_info", function(res){
+    console.log({'Client Connected...' : {"socket_id":socket.id,"MAC_ADDRESS":res.MAC_ADDRESS}});
+    res.SOCKET_ID = sid;
+    roomController.addRoom(res);
+    roomController.setStatus(1, sid);
+  });
 
-io.on("connection", (client) => {
-  console.log("client connect");
-  
-  client.on("disconnect", (response) => {
-    console.log('Client Disconnectd...');
+  // console.log(socket.handshake);
+  // var address = socket.handshake.address;
+  // console.log('New connection from ' + address.address + ':' + address.port);
+
+  socket.on("disconnect", (response) => {
+
+    roomController.setStatus(2, sid);
+      console.log({'Client Disconnect...' : {"Socket_id":socket.id}});
   })
 });
 
