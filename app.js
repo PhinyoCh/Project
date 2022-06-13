@@ -7,6 +7,7 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const socketController = require('./controllers/socket.controller');
 const roomController = require('./controllers/room.controller');
+const logController = require('./controllers/log.controller');
 //import { useState, useEffect } from 'react';
 
 //listening port
@@ -66,11 +67,14 @@ const io = require("socket.io")(server, { cors: { origin: "*" } });
 io.on("connection", (socket) => {
   let sid = socket.id;
   app.set('socket', socket);
+  app.set('io', io);
   socket.on("device_info", function(res){
     console.log({'Client Connected...' : {"socket_id":socket.id,"MAC_ADDRESS":res.MAC_ADDRESS}});
     res.SOCKET_ID = sid;
     roomController.addRoom(res);
     roomController.setStatus(1, sid);
+    io.emit('update', 'refresh');
+    logController.saveConnectionLog(res.MAC_ADDRESS, 11, res.TIMESTAMP, 'Connection Successes');
   });
 
   // console.log(socket.handshake);
@@ -80,7 +84,10 @@ io.on("connection", (socket) => {
   socket.on("disconnect", (response) => {
 
     roomController.setStatus(2, sid);
+      var TIMESTAMP = new Date().toISOString();
       console.log({'Client Disconnect...' : {"Socket_id":socket.id}});
+      io.emit('update', 'refresh');
+      logController.saveConnectionLog(socket.id, 10, TIMESTAMP, 'Disconnect By Node');
   })
 });
 

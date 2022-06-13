@@ -2,7 +2,18 @@
 
     <main class="mt-5 pt-3 ">
       <div class="container-fluid">
-          <div class="row">
+      <div class="row">
+        <div class="collapse" id="refresh">
+          <div class="card card-body ">
+            <div class="text-center">
+              <a>'The Node has been update, Please Refresh This Page.. NOW!!'</a>
+              <a href="/"><b>Refresh</b></a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+          <div class="row my-1">
             <div class="card">
               <div class="card-header bg-dark">
                 <h3 class="text-uppercase text-center text-white mt-4">sound control</h3>
@@ -195,7 +206,7 @@
       <br>
 <div class="row my-2">  
   <div class="col text-center">
-  <button type="button" class="btn btn-primary" data-bs-toggle="collapse" data-bs-target="#upload-collapse" aria-expanded="false" aria-controls="upload-collapse">LIVE</button>
+  <button type="button" class="btn btn-primary" name="btn-stop">LIVE</button>
   <button type="button" class="btn btn-primary" data-bs-toggle="collapse" data-bs-target="#upload-collapse" aria-expanded="false" aria-controls="upload-collapse">MP3 File</button>
 </div>
 </div>
@@ -243,11 +254,30 @@
 <script src="/node_modules/sweetalert2//dist/sweetalert2.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
-<script>
+<script src="/socket.io/socket.io.js"></script>
 
+<script>
+  const socket = io();
+  socket.on('update', (data) =>{
+    if (data == 'refresh'){
+      $('#refresh').addClass('show');
+      /*
+      Swal.fire(
+        'Please Refresh This Page.',
+        'Node has been update.',
+        'warning'
+      ).then(() => {
+        window.location.reload();
+      })*/
+    } else {
+      $('#refresh').remove('show');
+    }
+  })
   var Feature = (function(){
       let glo_room_id;
       let glo_role = '<%=role %>';
+      
+
       let glo_state;
       var dataTable = $('#table-room-id').DataTable({
         language : {emptyTable: "ไม่พบข้อมูล"},
@@ -299,17 +329,30 @@
           },   
           { 
             data: function (data) {
-
-              return '<div class="switch-block "> \
-                <label class="switch-light switch-candy">\
-                  <input type="checkbox" class="switch-input" value="' +data['room_name'] + "," +data['mac_address'] +'">\
-                  <span>\
-                    <span>off</span>\
-                    <span>on</span>\
-                    <a></a>\
-                  </span>\
-                </label>\
-              </div>'
+              if(data['isNew'] == 1 || data['status'] == 2){                
+                return '<div class="switch-block "> \
+                  <label class="switch-light switch-candy">\
+                    <input type="checkbox" class="switch-input" value="' +data['room_name'] + "," +data['mac_address'] +'" disabled>\
+                    <span>\
+                      <span>off</span>\
+                      <span>on</span>\
+                      <a></a>\
+                    </span>\
+                  </label>\
+                </div>'
+              } else{
+                return '<div class="switch-block "> \
+                  <label class="switch-light switch-candy">\
+                    <input type="checkbox" class="switch-input" value="' +data['room_name'] + "," +data['mac_address'] +'">\
+                    <span>\
+                      <span>off</span>\
+                      <span>on</span>\
+                      <a></a>\
+                    </span>\
+                  </label>\
+                </div>'
+              }
+              
               /*var status = ""
               if(data['isNew'] == 1){
                 return '<button type="button" name="new-room" data-id="' + data['room_id'] + '"\
@@ -373,23 +416,27 @@
             dataType: 'JSON',
             success: function(res){
               $.each(res, function(index, data){
-                $('#file-name').append('<option value="'+data['sound_address']+'">'+data['record_name']+'</option>')
+                $('#file-name').append('<option value="'+data['sound_address']+ ',' + data['record_name'] +'">'+data['record_name']+'</option>')
               })
             }
            })
 
            //all on switch
            $('a#a-on').click(function(){
-            $(':checkbox.switch-input').prop('checked',true)
+            //console.log("New Room: ", data['isNew']);
+            console.log("Hello");
+            $(':checkbox:enabled.switch-input').prop('checked',true)
           })
 
            //all off switch
            $('a#a-off').click(function(){
-            $(':checkbox.switch-input').prop('checked',false)
+            $(':checkbox:enabled.switch-input').prop('checked',false)
            })
         },
 
-
+        onclickStop: function(){
+          
+        },
 
         onClickSentFile: function(){
           'use strict'
@@ -626,12 +673,25 @@
           $("#btn-select-room").click(function(){
             //const switch_data = document.getElementsByClassName('switch-input');
             const switch_data = document.querySelectorAll('.switch-input:checked')
-            const room = [...switch_data].map(input => input.value );
-            var soundname = $('#file-name').val();
+            const arr_room = [...switch_data].map(input => input.value );
+            var soundname = $('#file-name').val().split(',')[0];
+            var sound_displayname = $('#file-name').val().split(',')[1];
+            var room_displayname =[];
+            var data = {} 
+            var room = []
+            for (x in arr_room){
+              room_displayname.push(arr_room[x].split(",")[0]);
+              room.push({
+                room_name : arr_room[x].split(",")[0],
+                mac_address : arr_room[x].split(",")[1] 
+              })
+            }
+            data.room = room;
+            data.sound_name = soundname;
 
-            console.log({"room":room,'filename':soundname});
+            
             var isSelectFile = $('#upload-collapse').hasClass('show')
-            if (room == 'undefined' || room.length < 1) {
+            if (arr_room == 'undefined' || arr_room.length < 1) {
               Swal.fire({
                 icon: 'warning',
                 title: 'Can not play',
@@ -648,27 +708,55 @@
                 } else {
                   Swal.fire({
                     title: 'Are you sure?',
-                    text: "",
-                    icon: 'warning',
+                    html: "<p>Do you want to voice the <b>"+room_displayname.join(', ')+"</b> room with <b>"+ sound_displayname + "</b> sound? </p>",
+                    icon: 'info',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
                     cancelButtonColor: '#d33',
-                    confirmButtonText: 'Yes, delete it!'
+                    confirmButtonText: 'Yes, send it!'
                   }).then((result) => {
                     if (result.isConfirmed) {
                       Swal.fire(
-                        'Deleted!',
-                        'Your file has been deleted.',
+                        'Success!',
+                        'Done The audio file has been played successfully.',
                         'success'
                       )
+
+                      $.ajax({ 
+                        url: '/socket',
+                        data: JSON.stringify(data),
+                        type: 'POST',
+                        contentType: "application/json; charset=utf-8",
+                        success: function(response)
+                        {
+                          /*
+                          if(response.status == 'error self remove'){
+                            Swal.fire(
+                            'error',
+                            'Sorry...',
+                            'You cannot edit this room!'
+                          )
+                          } 
+                          else if (response.status == 'Successes'){
+                            Swal.fire(
+                            'Succeed!',
+                            'Room Edit Succeeded.',
+                            'success'
+                          ).then(function(){
+                            $('#edit-modal').modal('toggle');
+                            dataTable.ajax.reload();
+                          });                        
+                          }*/
+                        }
+                      });
                     }
                   })
                 }
               } else {
                 Swal.fire({
-                  icon: 'info',
+                  icon: 'warning',
                   title: 'Sorry',
-                  text: 'This mode is under development.',
+                  text: 'Please select the mode you want to sound.',
                 })
               }
             }

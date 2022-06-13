@@ -8,6 +8,26 @@ module.exports = {
         return rows;
     },
 
+    getRoomBySocketID:async function (socket_id){
+        var [rows] = await db.promise().query(
+            'SELECT * FROM `room` WHERE active = 1 AND socket_id = ?',
+            [
+                socket_id
+            ]
+            )
+        return rows;
+    },
+
+    getRoomByMac:async function (mac_address){
+        var [rows] = await db.promise().query(
+            'SELECT * FROM `room` WHERE active = 1 AND mac_address = ?',
+            [
+                mac_address
+            ]
+            )
+        return rows;
+    },
+
     getMacRoom:async function (mac_address){
         var [rows] = await db.promise().query(
             'SELECT * FROM `room` WHERE mac_address = ? AND active = 1',

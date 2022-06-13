@@ -23,7 +23,6 @@ module.exports = {
         var record_name = req.body.record_name;
         var record_detail = req.body.record_detail;
         var update_date = req.body.update_date;
-
         await record.editSound(req.body,update_by).then(function(){
             return res.json({status:'successes','update_by':update_by,'record_name':record_name,'record_detail':record_detail,'record_id':record_id,'update_date':update_date});
             
